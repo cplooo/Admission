@@ -476,11 +476,12 @@ elif 院_系 == '1':
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
     # combined_df = pd.concat(dataframes, keys=selected_options)
 
-
 df_streamlit = []
 column_title = []
 
-
+####### 選擇身分別  (要放在 Q1 之後)
+考生or親友or全部_list = ['考生','陪考親友','全部']
+考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
 
 
 
@@ -818,9 +819,9 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-####### 選擇身分別  (要放在 Q1 之後)
-考生or親友or全部_list = ['考生','陪考親友','全部']
-考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
+# ####### 選擇身分別  (要放在 Q1 之後)
+# 考生or親友or全部_list = ['考生','陪考親友','全部']
+# 考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
 ## '0', '1' 都相同
 if 院_系 == '0':
     if 考生or親友or全部 == '考生':
