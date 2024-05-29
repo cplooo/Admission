@@ -550,9 +550,12 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
         else:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
 
-        
-        ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+
+        #### 只看第一個選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
+        desired_order  = [item for item in dataframes[0]['項目'].tolist()]  ## 只看第一個選擇學系的項目
+        desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+        # ## 形成所有學系'項目'欄位的所有值
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
