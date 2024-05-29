@@ -441,8 +441,10 @@ departments_list = ['台灣文學系',
 faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
 
 ###### 選擇
-院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
+# 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
 # 院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
+院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: 以學系查詢時同時呈現學院及全校資料: ', value='0')
+
 
 if 院_系 == '0':
     # choice = st.selectbox('選擇學系', df_admission_original['科系'].unique())
@@ -453,12 +455,12 @@ if 院_系 == '0':
     
     # df_admission = df_admission_original[df_admission_original['科系']==choice]
     df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
-    df_admission_whole = df_admission
+    # df_admission_whole = df_admission
           
     # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
     choice_faculty = college_map[choice]
     df_admission_faculty = df_admission_original[df_admission_original['學院'].str.contains(choice_faculty, regex=True)]  ## 挑出全校所屬學院之資料
-    df_admission_faculty_whole = df_admission_faculty
+    # df_admission_faculty_whole = df_admission_faculty
 
     # selected_options = st.multiselect('選擇比較學系：', df_freshman_original['科系'].unique(), default=['化科系','企管系'])
     # selected_options = ['化科系','企管系']
@@ -473,12 +475,15 @@ elif 院_系 == '1':
     #choice = '管理'
     # df_admission = df_admission_original[df_admission_original['學院']==choice]
     df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
-    df_admission_whole = df_admission
-    df_admission_faculty_whole = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
+    # df_admission_whole = df_admission
+    # df_admission_faculty_whole = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
+    df_admission_faculty = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
     # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
     # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
     # combined_df = pd.concat(dataframes, keys=selected_options)
+# elif 院_系 == '2':
+
 
 df_streamlit = []
 column_title = []
@@ -794,7 +799,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
 
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
 
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
@@ -818,7 +823,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
 
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -855,7 +860,7 @@ with st.expander("Q2. 高中位置:"):
 
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
 
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
@@ -879,7 +884,7 @@ with st.expander("Q2. 高中位置:"):
 
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -977,7 +982,7 @@ with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1002,7 +1007,7 @@ with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
 
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1018,96 +1023,6 @@ with st.expander("Q8. 認識與瞭解靜宜大學的管道(複選):"):
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
-    # #### 選取前面 5 筆資料
-    # result_df = result_df.head(rank_number)
-    ##### 存到 list 'df_streamlit'
-    df_streamlit.append(result_df)  
-
-    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-    # st.write(choice)
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
-    st.markdown("##")  ## 更大的间隔
-
-    ##### 使用Streamlit畫單一圖 & 比較圖
-    # #### 畫比較圖時, 比較單位之選擇:
-    # if 院_系 == '0':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    # if 院_系 == '1':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
-
-    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
-    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
-    
-st.markdown("##")  ## 更大的间隔 
-
-
-
-###### 一階篩選公告後是否有收到通過學系之聯絡
-with st.expander("Q10. 一階篩選公告後是否有收到通過學系之聯絡:"):
-    # df_admission.iloc[:,9] ## 
-    column_index = 9
-    item_name = "一階篩選公告後是否有收到通過學系之聯絡"
-    column_title.append(df_admission.columns[column_index][0:])
-    # set(df_admission_original['科系'])
-    rank_number = 5
-
-    ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
-    # #### 選取前面 5 筆資料
-    # result_df = result_df.head(rank_number)
-    ##### 存到 list 'df_streamlit'
-    df_streamlit.append(result_df)  
-
-    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-    # st.write(choice)
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
-    st.markdown("##")  ## 更大的间隔
-
-    ##### 使用Streamlit畫單一圖 & 比較圖
-    # #### 畫比較圖時, 比較單位之選擇:
-    # if 院_系 == '0':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    # if 院_系 == '1':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
-
-    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
-    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
-    
-st.markdown("##")  ## 更大的间隔 
-
-
-
-###### 一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機
-with st.expander("Q11. 一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機:"):
-    # df_admission.iloc[:,10] ## 
-    column_index = 10
-    item_name = "一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機"
-    column_title.append(df_admission.columns[column_index][0:])
-    # set(df_admission_original['科系'])
-    rank_number = 5
-
-    ##### 產出 result_df: 加條件: Q10回答有 '有收到' 者, 才能進行此題Q11
-    if 院_系 == '0':
-        df_admission = df_admission_whole[df_admission_whole['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-        df_admission_faculty = df_admission_faculty_whole[df_admission_faculty_whole['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-    if 院_系 == '1':
-        df_admission = df_admission_whole[df_admission_whole['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-
-
-
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
@@ -1134,6 +1049,96 @@ with st.expander("Q11. 一階篩選通過學系之聯絡，是否提升參加第
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
+    
+st.markdown("##")  ## 更大的间隔 
+
+
+
+###### 一階篩選公告後是否有收到通過學系之聯絡
+with st.expander("Q10. 一階篩選公告後是否有收到通過學系之聯絡:"):
+    # df_admission.iloc[:,9] ## 
+    column_index = 9
+    item_name = "一階篩選公告後是否有收到通過學系之聯絡"
+    column_title.append(df_admission.columns[column_index][0:])
+    # set(df_admission_original['科系'])
+    rank_number = 5
+
+    ##### 產出 result_df
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    # #### 選取前面 5 筆資料
+    # result_df = result_df.head(rank_number)
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    ##### 使用Streamlit畫單一圖 & 比較圖
+    # #### 畫比較圖時, 比較單位之選擇:
+    # if 院_系 == '0':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    # if 院_系 == '1':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+
+    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
+    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
+    
+st.markdown("##")  ## 更大的间隔 
+
+
+
+###### 一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機
+with st.expander("Q11. 一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機:"):
+    # df_admission.iloc[:,10] ## 
+    column_index = 10
+    item_name = "一階篩選通過學系之聯絡，是否提升參加第二階段甄試之動機"
+    column_title.append(df_admission.columns[column_index][0:])
+    # set(df_admission_original['科系'])
+    rank_number = 5
+
+    ##### 產出 result_df: 加條件: Q10回答有 '有收到' 者, 才能進行此題Q11
+    if 院_系 == '0':
+        df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
+        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
+    if 院_系 == '1':
+        df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
+
+
+
+    result_df = Frequency_Distribution(df_admission_restrict, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    # #### 選取前面 5 筆資料
+    # result_df = result_df.head(rank_number)
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    ##### 使用Streamlit畫單一圖 & 比較圖
+    # #### 畫比較圖時, 比較單位之選擇:
+    # if 院_系 == '0':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    # if 院_系 == '1':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+
+    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
+    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     
 st.markdown("##")  ## 更大的间隔
 
@@ -1192,7 +1197,7 @@ with st.expander("Q12. 是否有參加4/20或4/27靜宜大學舉辦之甄試說�
     ##### 產出 result_df: 
 
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1219,7 +1224,7 @@ with st.expander("Q12. 是否有參加4/20或4/27靜宜大學舉辦之甄試說�
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
     ##Q11 有將 df_admission, df_admission_faculty 縮小範圍(加條件), 現在要恢復使用 df_admission_whole, df_admission_faculty_whole
-    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1236,13 +1241,57 @@ with st.expander("Q13. 參加甄試說明會對於瞭解以及選擇學系是否
 
     ##### 產出 result_df: 加條件: Q12回答 '是' 者, 才能進行此題Q13
     if 院_系 == '0':
-        df_admission = df_admission_whole[df_admission_whole['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
-        df_admission_faculty = df_admission_faculty_whole[df_admission_faculty_whole['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
+        df_admission_restrict = df_admission[df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
+        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
     if 院_系 == '1':
-        df_admission = df_admission_whole[df_admission_whole['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
+        df_admission_restrict = df_admission[df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
 
 
 
+    result_df = Frequency_Distribution(df_admission_restrict, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    # #### 選取前面 5 筆資料
+    # result_df = result_df.head(rank_number)
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    ##### 使用Streamlit畫單一圖 & 比較圖
+    # #### 畫比較圖時, 比較單位之選擇:
+    # if 院_系 == '0':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    # if 院_系 == '1':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+
+    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
+    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
+
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
+    
+st.markdown("##")  ## 更大的间隔 
+
+
+
+###### 對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選)
+with st.expander("Q16. 對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選):"):
+    # df_admission.iloc[:,15] ## 
+    column_index = 15
+    item_name = "對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選)"
+    column_title.append(df_admission.columns[column_index][0:])
+    # set(df_admission_original['科系'])
+    rank_number = 5
+
+    ##### 產出 result_df: 
+
+    # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
@@ -1268,52 +1317,8 @@ with st.expander("Q13. 參加甄試說明會對於瞭解以及選擇學系是否
 
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
-st.markdown("##")  ## 更大的间隔 
-
-
-
-###### 對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選)
-with st.expander("Q16. 對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選):"):
-    # df_admission.iloc[:,15] ## 
-    column_index = 15
-    item_name = "對於書審資料的準備，你曾經由哪些管道獲得幫助與指引(複選)"
-    column_title.append(df_admission.columns[column_index][0:])
-    # set(df_admission_original['科系'])
-    rank_number = 5
-
-    ##### 產出 result_df: 
-
-    # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
-    # #### 選取前面 5 筆資料
-    # result_df = result_df.head(rank_number)
-    ##### 存到 list 'df_streamlit'
-    df_streamlit.append(result_df)  
-
-    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
-    # st.write(choice)
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
-    st.markdown("##")  ## 更大的间隔
-
-    ##### 使用Streamlit畫單一圖 & 比較圖
-    # #### 畫比較圖時, 比較單位之選擇:
-    # if 院_系 == '0':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    # if 院_系 == '1':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
-
-    # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
-    # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     ##Q13 有將 df_admission, df_admission_faculty 縮小範圍(加條件), 現在要恢復使用 df_admission_whole, df_admission_faculty_whole
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1330,7 +1335,7 @@ with st.expander("Q18. 您曾經由哪些管道了解書審資料上傳到甄選
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1356,7 +1361,7 @@ with st.expander("Q18. 您曾經由哪些管道了解書審資料上傳到甄選
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1373,7 +1378,7 @@ with st.expander("Q20. 政府對於私立大專校院每年減免學費3.5萬元
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1399,7 +1404,7 @@ with st.expander("Q20. 政府對於私立大專校院每年減免學費3.5萬元
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1416,7 +1421,7 @@ with st.expander("Q21. 目前教育部的學費補助措施是否會增加您就
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1442,7 +1447,7 @@ with st.expander("Q21. 目前教育部的學費補助措施是否會增加您就
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
@@ -1459,7 +1464,7 @@ with st.expander("Q22. 您知道靜宜大學今年對於各入學管道提供最
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1485,7 +1490,7 @@ with st.expander("Q22. 您知道靜宜大學今年對於各入學管道提供最
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔
 
@@ -1502,7 +1507,7 @@ with st.expander("Q23. 靜宜大學今年對於各入學管道提供之獎學金
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1528,7 +1533,7 @@ with st.expander("Q23. 靜宜大學今年對於各入學管道提供之獎學金
     # Draw(院_系, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     
-    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_whole, df_admission_faculty=df_admission_faculty_whole)    
+    Draw(院_系, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
 
