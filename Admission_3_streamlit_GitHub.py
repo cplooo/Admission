@@ -963,11 +963,11 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-###### 參與靜宜大學申請入學主要原因
-with st.expander("Q6. 參與靜宜大學申請入學主要原因:"):
+###### 參與靜宜大學申請入學主要原因(複選)
+with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
     # df_admission.iloc[:,5] ## 
     column_index = 5
-    item_name = "參與靜宜大學申請入學主要原因"
+    item_name = "參與靜宜大學申請入學主要原因(複選)"
     column_title.append(df_admission.columns[column_index][0:])
     # set(df_admission_original['科系'])
     rank_number = 5
@@ -1004,11 +1004,11 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-###### 認識與瞭解靜宜大學的管道
-with st.expander("Q8. 認識與瞭解靜宜大學的管道:"):
+###### 認識與瞭解靜宜大學的管道(複選)
+with st.expander("Q8. 認識與瞭解靜宜大學的管道(複選):"):
     # df_admission.iloc[:,7] ## 
     column_index = 7
-    item_name = "認識與瞭解靜宜大學的管道"
+    item_name = "認識與瞭解靜宜大學的管道(複選)"
     column_title.append(df_admission.columns[column_index][0:])
     # set(df_admission_original['科系'])
     rank_number = 5
