@@ -855,6 +855,17 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
 
 
 ####### 問卷的各項問題
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">基本資料</p>
+""", unsafe_allow_html=True)
+
+
 ###### 身分別
 with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     # df_admission.iloc[:,0] ## 0 身分別
@@ -1043,7 +1054,15 @@ st.markdown("##")  ## 更大的间隔
 # st.markdown("##")  ## 更大的间隔 
 
 
-
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">申請入學相關</p>
+""", unsafe_allow_html=True)
 ###### 參與靜宜大學申請入學主要原因(複選)
 with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
     # df_admission.iloc[:,5] ## 
@@ -1614,6 +1633,18 @@ with st.expander("Q23. 靜宜大學今年對於各入學管道提供之獎學金
     Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 10,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     
 st.markdown("##")  ## 更大的间隔 
+
+
+
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">第二階段甄試服務滿意度</p>
+""", unsafe_allow_html=True)
 
  
 
