@@ -483,6 +483,7 @@ elif 系_院_校 == '1':
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
     # combined_df = pd.concat(dataframes, keys=selected_options)
 elif 系_院_校 == '2':
+    choice = '全校'
     df_admission = df_admission_original
     df_admission_faculty = df_admission
 
@@ -681,7 +682,7 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
             result_df = result_df.head(rank_number)
 
         # plt.barh(result_df['項目'], result_df['人數'], label=choice, width=bar_width)
-        plt.barh(result_df['項目'], result_df['人數'], label='全校')
+        plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
         for i in range(len(result_df['項目'])):
             if fontsize_adjust==0:
