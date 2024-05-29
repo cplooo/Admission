@@ -701,15 +701,18 @@ departments_list = ['台灣文學系',
   '寰宇管理學士學位學程', 
 ]
 
+
+faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
+
 考生or親友or全部 = ['考生','陪考親友','全部']
 
 
-# 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
-院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
+院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
+# 院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
 
 if 院_系 == '0':
     # choice = st.selectbox('選擇學系', df_admission_original['科系'].unique())
-    choice = st.selectbox('選擇學系', departments_list)
+    choice = st.selectbox('選擇學系', departments_list, index=0)
     #choice = '化科系'
     
     # 考生or親友or全部 = st.selectbox('選擇身分別(考生,陪考親友,全部)', 考生or親友or全部)
@@ -736,25 +739,16 @@ if 院_系 == '0':
     # combined_df = pd.concat(dataframes, keys=selected_options)
     # #### 去掉 level 1 index
     # combined_df_r = combined_df.reset_index(level=1, drop=True)
-# elif 院_系 == '1':
-#     choice = st.selectbox('選擇學院', df_admission_original['學院'].unique(),index=0)
-#     #choice = '管理'
-#     df_admission = df_admission_original[df_admission_original['學院']==choice]
-#     # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
-#     # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
-#     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
-#     # combined_df = pd.concat(dataframes, keys=selected_options)
-
-
-# choice = st.selectbox('選擇學系', df_freshman_original['科系'].unique())
-# #choice = '化科系'
-# df_freshman = df_freshman_original[df_freshman_original['科系']==choice]
-# selected_options = st.multiselect('選擇比較學系：', df_freshman_original['科系'].unique())
-# # selected_options = ['化科系','企管系']
-# collections = [df_freshman_original[df_freshman_original['科系']==i] for i in selected_options]
-# dataframes = [Frequency_Distribution(df, 7) for df in collections]
-# combined_df = pd.concat(dataframes, keys=selected_options)
-# # combined_df = pd.concat([dataframes[0], dataframes[1]], axis=0)
+elif 院_系 == '1':
+    # choice = st.selectbox('選擇學院', df_admission_original['學院'].unique(),index=0)
+    choice = st.selectbox('選擇學院', faculties_list, index=0)
+    #choice = '管理'
+    # df_admission = df_admission_original[df_admission_original['學院']==choice]
+    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
+    # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
+    # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
+    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
 
 
 
