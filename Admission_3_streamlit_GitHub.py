@@ -605,8 +605,8 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
         ### 在Streamlit中显示
         st.pyplot(plt)
 
-    # if 系_院_校 == '1':
-    else:  ## 包含 系_院_校 == '1', 系_院_校 == '2'
+    if 系_院_校 == '1':
+    # else:  ## 包含 系_院_校 == '1', 系_院_校 == '2'
         #### 設置中文顯示
         # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
         # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
@@ -664,6 +664,67 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
         # plt.show()
         ### 在Streamlit中显示
         st.pyplot(plt)
+        
+    if 系_院_校 == '2':
+    # else:  ## 包含 系_院_校 == '1', 系_院_校 == '2'
+        #### 設置中文顯示
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        #### 创建图形和坐标轴
+        plt.figure(figsize=(width2, heigh2))
+        #### 绘制条形图
+        ### 反轉 dataframe result_df 的所有行的值的次序,  使得表與圖的項目次序一致
+        result_df = result_df.iloc[::-1].reset_index(drop=True)
+        if rank == True:
+            result_df = result_df.head(rank_number)
+
+        # plt.barh(result_df['項目'], result_df['人數'], label=choice, width=bar_width)
+        plt.barh(result_df['項目'], result_df['人數'], label='全校')
+        #### 標示比例數據
+        for i in range(len(result_df['項目'])):
+            if fontsize_adjust==0:
+                plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}')
+            if fontsize_adjust==1:
+                plt.text(result_df['人數'][i]+1, result_df['項目'][i], f'{result_df.iloc[:, 2][i]:.1%}', fontsize=annotation_fontsize)
+            
+        #### 添加一些图形元素
+        if fontsize_adjust==0:
+            plt.title(item_name)
+            plt.xlabel('人數')
+        if fontsize_adjust==1:
+            plt.title(item_name, fontsize=title_fontsize)
+            plt.xlabel('人數', fontsize=xlabel_fontsize)
+        
+        #plt.ylabel('本校現在所提供的資源或支援事項')
+        #### 调整x轴和y轴刻度标签的字体大小
+        if fontsize_adjust==0:
+            # plt.tick_params(axis='both')
+            ## 设置x轴刻度的字体大小
+            plt.tick_params(axis='x')
+            ## 设置y轴刻度的字体大小
+            plt.tick_params(axis='y')
+        if fontsize_adjust==1:
+            # plt.tick_params(axis='both', labelsize=xticklabel_fontsize)  # 同时调整x轴和y轴 
+            ## 设置x轴刻度的字体大小
+            plt.tick_params(axis='x', labelsize=xticklabel_fontsize)
+            ## 设置y轴刻度的字体大小
+            plt.tick_params(axis='y', labelsize=yticklabel_fontsize)
+        
+        if fontsize_adjust==0:
+            plt.legend()
+        if fontsize_adjust==1:
+            plt.legend(fontsize=legend_fontsize)
+        
+        #### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        #### 显示图形
+        ### 一般顯示
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
+
 
 
     # ##### 使用streamlit 畫比較圖
