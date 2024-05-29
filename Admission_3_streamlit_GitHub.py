@@ -710,17 +710,17 @@ if 院_系 == '0':
     choice = st.selectbox('選擇學系', departments_list)
     #choice = '化科系'
     
-    考生or親友or全部 = st.selectbox('選擇身分別(考生,陪考親友,全部)', 考生or親友or全部)
+    # 考生or親友or全部 = st.selectbox('選擇身分別(考生,陪考親友,全部)', 考生or親友or全部)
     
     # df_admission = df_admission_original[df_admission_original['科系']==choice]
     df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
     
-    if 考生or親友or全部 == '考生':
-        df_admission = df_admission[df_admission['身分別']=='考生'] 
-    if 考生or親友or全部 == '陪考親友':
-        df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
-    if 考生or親友or全部 == '全部':
-        df_admission = df_admission 
+    # if 考生or親友or全部 == '考生':
+    #     df_admission = df_admission[df_admission['身分別']=='考生'] 
+    # if 考生or親友or全部 == '陪考親友':
+    #     df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+    # if 考生or親友or全部 == '全部':
+    #     df_admission = df_admission 
         
 
     # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
