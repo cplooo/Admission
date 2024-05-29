@@ -375,6 +375,117 @@ combined_df = pd.concat(dataframes, keys=selected_options)
 
 
 
+
+
+
+
+
+
+
+
+
+####### 設定呈現標題 
+html_temp = """
+		<div style="background-color:#3872fb;padding:10px;border-radius:10px">
+		<h1 style="color:white;text-align:center;"> 113靜宜大學申請入學甄試服務問卷調查 </h1>
+		</div>
+		"""
+stc.html(html_temp)
+# st.subheader("以下調查與計算母體為大二填答同學1834人")
+###### 使用 <h3> 或 <h4> 标签代替更大的标题标签
+# st.markdown("##### 以下調查與計算母體為大二填答同學1834人")
+
+###### 或者，使用 HTML 的 <style> 来更精细地控制字体大小和加粗
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">以下調查與計算母體為:考生1737人, 陪考親友153人, 共1890人</p>
+""", unsafe_allow_html=True)
+
+st.markdown("##")  ## 更大的间隔
+
+
+# global 院_系
+####### 選擇: 院系 
+###### 院 or 系 清單:
+departments_list = ['台灣文學系', 
+  '中國文學系', 
+  '社會工作與兒童少年福利學系',  
+  '大眾傳播學系', 
+  '法律學系', 
+  '生態人文學系', 
+  '英國語文學系', 
+  '西班牙語文學系', 
+  '日本語文學系', 
+  '會計學系', 
+  '企業管理學系', 
+  '國際企業學系',
+  '財務金融學系', 
+  '觀光事業學系',
+  '應用化學系', 
+  '資料科學暨大數據分析與應用學系', 
+  '財務工程學系',
+  '食品營養學系', 
+  '化妝品科學系', 
+  '資訊管理學系', 
+  '資訊工程學系', 
+  '資訊傳播工程學系',  
+  '寰宇外語教育學位學士學程', 
+  '寰宇管理學士學位學程', 
+]
+
+faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
+
+###### 選擇
+院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
+# 院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
+
+if 院_系 == '0':
+    # choice = st.selectbox('選擇學系', df_admission_original['科系'].unique())
+    choice = st.selectbox('選擇學系', departments_list, index=0)
+    #choice = '化科系'
+    
+    
+    
+    # df_admission = df_admission_original[df_admission_original['科系']==choice]
+    df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
+          
+    # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
+    choice_faculty = college_map[choice]
+    df_admission_faculty = df_admission_original[df_admission_original['學院'].str.contains(choice_faculty, regex=True)]  ## 挑出全校所屬學院之資料
+
+    # selected_options = st.multiselect('選擇比較學系：', df_freshman_original['科系'].unique(), default=['化科系','企管系'])
+    # selected_options = ['化科系','企管系']
+    # collections = [df_freshman_original[df_freshman_original['科系']==i] for i in selected_options]
+    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
+    # #### 去掉 level 1 index
+    # combined_df_r = combined_df.reset_index(level=1, drop=True)
+elif 院_系 == '1':
+    # choice = st.selectbox('選擇學院', df_admission_original['學院'].unique(),index=0)
+    choice = st.selectbox('選擇學院', faculties_list, index=0)
+    #choice = '管理'
+    # df_admission = df_admission_original[df_admission_original['學院']==choice]
+    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
+    # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
+    # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
+    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
+    # combined_df = pd.concat(dataframes, keys=selected_options)
+
+
+df_streamlit = []
+column_title = []
+
+
+
+
+
+
+
 ####### 定義相關函數 (Part 2): 因為函數 'Draw' 的定義需要使用 'dataframes','combined_df' 來進行相關計算, 因此要放在以上 '預先設定' 之後才會有 'dataframes', 'combined_df' 的值
 ###### 畫圖形(單一學系或學院, 比較圖形)
 @st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
@@ -667,111 +778,6 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
 
 
 
-
-####### 設定呈現標題 
-html_temp = """
-		<div style="background-color:#3872fb;padding:10px;border-radius:10px">
-		<h1 style="color:white;text-align:center;"> 113靜宜大學申請入學甄試服務問卷調查 </h1>
-		</div>
-		"""
-stc.html(html_temp)
-# st.subheader("以下調查與計算母體為大二填答同學1834人")
-###### 使用 <h3> 或 <h4> 标签代替更大的标题标签
-# st.markdown("##### 以下調查與計算母體為大二填答同學1834人")
-
-###### 或者，使用 HTML 的 <style> 来更精细地控制字体大小和加粗
-st.markdown("""
-<style>
-.bold-small-font {
-    font-size:18px !important;
-    font-weight:bold !important;
-}
-</style>
-<p class="bold-small-font">以下調查與計算母體為:考生1737人, 陪考親友153人, 共1890人</p>
-""", unsafe_allow_html=True)
-
-st.markdown("##")  ## 更大的间隔
-
-
-# global 院_系
-####### 選擇: 院系 
-###### 院 or 系 清單:
-departments_list = ['台灣文學系', 
-  '中國文學系', 
-  '社會工作與兒童少年福利學系',  
-  '大眾傳播學系', 
-  '法律學系', 
-  '生態人文學系', 
-  '英國語文學系', 
-  '西班牙語文學系', 
-  '日本語文學系', 
-  '會計學系', 
-  '企業管理學系', 
-  '國際企業學系',
-  '財務金融學系', 
-  '觀光事業學系',
-  '應用化學系', 
-  '資料科學暨大數據分析與應用學系', 
-  '財務工程學系',
-  '食品營養學系', 
-  '化妝品科學系', 
-  '資訊管理學系', 
-  '資訊工程學系', 
-  '資訊傳播工程學系',  
-  '寰宇外語教育學位學士學程', 
-  '寰宇管理學士學位學程', 
-]
-
-faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
-
-###### 選擇
-院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
-# 院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
-
-if 院_系 == '0':
-    # choice = st.selectbox('選擇學系', df_admission_original['科系'].unique())
-    choice = st.selectbox('選擇學系', departments_list, index=0)
-    #choice = '化科系'
-    
-    
-    
-    # df_admission = df_admission_original[df_admission_original['科系']==choice]
-    df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
-          
-    # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
-    choice_faculty = college_map[choice]
-    df_admission_faculty = df_admission_original[df_admission_original['學院'].str.contains(choice_faculty, regex=True)]  ## 挑出全校所屬學院之資料
-
-    # selected_options = st.multiselect('選擇比較學系：', df_freshman_original['科系'].unique(), default=['化科系','企管系'])
-    # selected_options = ['化科系','企管系']
-    # collections = [df_freshman_original[df_freshman_original['科系']==i] for i in selected_options]
-    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
-    # combined_df = pd.concat(dataframes, keys=selected_options)
-    # #### 去掉 level 1 index
-    # combined_df_r = combined_df.reset_index(level=1, drop=True)
-elif 院_系 == '1':
-    # choice = st.selectbox('選擇學院', df_admission_original['學院'].unique(),index=0)
-    choice = st.selectbox('選擇學院', faculties_list, index=0)
-    #choice = '管理'
-    # df_admission = df_admission_original[df_admission_original['學院']==choice]
-    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
-    # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
-    # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
-    # dataframes = [Frequency_Distribution(df, 7) for df in collections]
-    # combined_df = pd.concat(dataframes, keys=selected_options)
-
-
-df_streamlit = []
-column_title = []
-
-
-####### 選擇身分別
-考生or親友or全部_list = ['考生','陪考親友','全部']
-考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
-
-
-
-
 ####### 問卷的各項問題
 ###### 身分別
 with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
@@ -812,6 +818,9 @@ st.markdown("##")  ## 更大的间隔
 
 
 
+####### 選擇身分別  (要放在 Q1 之後)
+考生or親友or全部_list = ['考生','陪考親友','全部']
+考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
 ## '0', '1' 都相同
 if 院_系 == '0':
     if 考生or親友or全部 == '考生':
