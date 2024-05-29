@@ -409,7 +409,16 @@ st.markdown("""
 st.markdown("##")  ## 更大的间隔
 
 
-# global 院_系
+
+st.markdown("""
+<style>
+.bold-small-font {
+    font-size:18px !important;
+    font-weight:bold !important;
+}
+</style>
+<p class="bold-small-font">系、院、校 群體選擇 & 填問卷者身份選擇</p>
+""", unsafe_allow_html=True)
 ####### 選擇: 院系 
 ###### 院 or 系 清單:
 departments_list = ['台灣文學系', 
