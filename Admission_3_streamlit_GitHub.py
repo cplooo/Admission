@@ -492,6 +492,9 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
         #### 绘制条形图
         ### 反轉 dataframe result_df 的所有行的值的次序,  使得表與圖的項目次序一致
         result_df = result_df.iloc[::-1].reset_index(drop=True)
+        if rank == True:
+            result_df = result_df.head(rank_number)
+
         # plt.barh(result_df['項目'], result_df['人數'], label=choice, width=bar_width)
         plt.barh(result_df['項目'], result_df['人數'], label=choice)
         #### 標示比例數據
@@ -542,7 +545,12 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
     # st.subheader("不同單位比較")
     if 院_系 == '0':
         collections = [df_admission_original[df_admission_original['科系']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+        if rank == True:
+            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
+        else:
+            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+
+        
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -550,7 +558,12 @@ def Draw(院_系, column_index, split_symbol=';', dropped_string='沒有工讀',
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 院_系 == '1':
         collections = [df_admission_original[df_admission_original['學院']==i] for i in selected_options]
-        dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+        if rank == True:
+            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
+        else:
+            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+
+        
         ## 形成所有學系'項目'欄位的所有值
         desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -862,7 +875,7 @@ with st.expander("Q3. 高中別:"):
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
     #### 選取前面 5 筆資料
     result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
