@@ -1186,7 +1186,7 @@ with st.expander("Q12. 是否有參加4/20或4/27靜宜大學舉辦之甄試說�
     rank_number = 5
 
     ##### 產出 result_df
-    set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']])
+    st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
