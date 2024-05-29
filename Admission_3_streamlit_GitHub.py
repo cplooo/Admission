@@ -753,10 +753,10 @@ column_title = []
 
 ####### 問卷的各項問題
 ###### 身分別
-with st.expander("Q1. 身分別:"):
+with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     # df_admission.iloc[:,0] ## 0 身分別
     column_index = 0
-    item_name = "身分別"
+    item_name = "身分別(考生與陪考親友的佔比)"
     column_title.append(df_admission.columns[column_index][0:])
 
 
