@@ -673,8 +673,8 @@ st.markdown("##")  ## 更大的间隔
 
 
 # global 院_系
-####### 選擇院系
-###### 選擇 院 or 系:
+####### 選擇: 院系 
+###### 院 or 系 清單:
 departments_list = ['台灣文學系', 
   '中國文學系', 
   '社會工作與兒童少年福利學系',  
@@ -701,12 +701,9 @@ departments_list = ['台灣文學系',
   '寰宇管理學士學位學程', 
 ]
 
-
 faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
 
-考生or親友or全部 = ['考生','陪考親友','全部']
-
-
+###### 選擇
 院_系 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ')
 # 院_系 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
 
@@ -715,19 +712,11 @@ if 院_系 == '0':
     choice = st.selectbox('選擇學系', departments_list, index=0)
     #choice = '化科系'
     
-    # 考生or親友or全部 = st.selectbox('選擇身分別(考生,陪考親友,全部)', 考生or親友or全部)
+    
     
     # df_admission = df_admission_original[df_admission_original['科系']==choice]
     df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
-    
-    # if 考生or親友or全部 == '考生':
-    #     df_admission = df_admission[df_admission['身分別']=='考生'] 
-    # if 考生or親友or全部 == '陪考親友':
-    #     df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
-    # if 考生or親友or全部 == '全部':
-    #     df_admission = df_admission 
-        
-
+          
     # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
     choice_faculty = college_map[choice]
     df_admission_faculty = df_admission_original[df_admission_original['學院'].str.contains(choice_faculty, regex=True)]  ## 挑出全校所屬學院之資料
@@ -751,9 +740,15 @@ elif 院_系 == '1':
     # combined_df = pd.concat(dataframes, keys=selected_options)
 
 
-
 df_streamlit = []
 column_title = []
+
+
+####### 選擇身分別
+考生or親友or全部_list = ['考生','陪考親友','全部']
+考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
+
+
 
 
 ####### 問卷的各項問題
@@ -794,6 +789,25 @@ with st.expander("Q1. 身分別:"):
     
 st.markdown("##")  ## 更大的间隔 
 
+
+
+## '0', '1' 都相同
+if 院_系 == '0':
+    if 考生or親友or全部 == '考生':
+        df_admission = df_admission[df_admission['身分別']=='考生'] 
+    if 考生or親友or全部 == '陪考親友':
+        df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+    if 考生or親友or全部 == '全部':
+        df_admission = df_admission 
+if 院_系 == '1':
+    if 考生or親友or全部 == '考生':
+        df_admission = df_admission[df_admission['身分別']=='考生'] 
+    if 考生or親友or全部 == '陪考親友':
+        df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+    if 考生or親友or全部 == '全部':
+        df_admission = df_admission 
+
+  
 
 
 ###### 高中位置
