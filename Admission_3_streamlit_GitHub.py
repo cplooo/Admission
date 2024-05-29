@@ -794,7 +794,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
 
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
 
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
@@ -855,7 +855,7 @@ with st.expander("Q2. 高中位置:"):
 
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
 
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
@@ -977,7 +977,7 @@ with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1018,7 +1018,7 @@ with st.expander("Q8. 認識與瞭解靜宜大學的管道(複選):"):
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1059,7 +1059,7 @@ with st.expander("Q10. 一階篩選公告後是否有收到通過學系之聯絡
     rank_number = 5
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1192,7 +1192,7 @@ with st.expander("Q12. 是否有參加4/20或4/27靜宜大學舉辦之甄試說�
     ##### 產出 result_df: 
 
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1284,15 +1284,10 @@ with st.expander("Q16. 對於書審資料的準備，你曾經由哪些管道獲
     # set(df_admission_original['科系'])
     rank_number = 5
 
-    ##### 產出 result_df: Q13 有將 df_admission, df_admission_faculty 縮小範圍(加條件), 現在要恢復為原來
-    if 院_系 == '0':
-        df_admission = df_admission_whole
-        df_admission_faculty = df_admission_faculty_whole 
-    if 院_系 == '1':
-        df_admission = df_admission_whole
+    ##### 產出 result_df: 
 
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1335,7 +1330,7 @@ with st.expander("Q18. 您曾經由哪些管道了解書審資料上傳到甄選
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1378,7 +1373,7 @@ with st.expander("Q20. 政府對於私立大專校院每年減免學費3.5萬元
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1421,7 +1416,7 @@ with st.expander("Q21. 目前教育部的學費補助措施是否會增加您就
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1464,7 +1459,7 @@ with st.expander("Q22. 您知道靜宜大學今年對於各入學管道提供最
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
@@ -1507,7 +1502,7 @@ with st.expander("Q23. 靜宜大學今年對於各入學管道提供之獎學金
 
     ##### 產出 result_df
     # st.write(set([i for i in df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']]))
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission_whole, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
     # #### 選取前面 5 筆資料
     # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
