@@ -474,6 +474,7 @@ elif 院_系 == '1':
     # df_admission = df_admission_original[df_admission_original['學院']==choice]
     df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
     df_admission_whole = df_admission
+    df_admission_faculty_whole = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
     # selected_options = st.multiselect('選擇比較學的院：', df_freshman_original['學院'].unique(), default=['理學院','資訊學院'])
     # collections = [df_freshman_original[df_freshman_original['學院']==i] for i in selected_options]
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
