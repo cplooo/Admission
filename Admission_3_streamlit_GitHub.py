@@ -1065,10 +1065,10 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### 各學系填答人數與比例
-with st.expander("Q4. 各學系填答人數與比例:"):
+with st.expander("Q4. 各學系填答人數與比例(複選):"):
     # df_admission.iloc[:,3] ## 
     column_index = 3
-    item_name = "各學系填答人數與比例"
+    item_name = "各學系填答人數與比例(複選)"
     column_title.append(df_admission.columns[column_index][0:])
     # set(df_admission_original['科系'])
     rank_number = 5
