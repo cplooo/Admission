@@ -1065,7 +1065,7 @@ st.markdown("##")  ## 更大的间隔
 
 
 ###### 各學系填答人數與比例
-with st.expander("Q4. 各學系填答人數與比例(複選):"):
+with st.expander("Q4. 各學系填答人數與比例(複選): 報考所選擇單位之學系考生,其重複報考各學系分佈情形."):
     # df_admission.iloc[:,3] ## 
     column_index = 3
     item_name = "各學系填答人數與比例(複選)"
