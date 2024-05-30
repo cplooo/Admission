@@ -1658,7 +1658,7 @@ st.markdown("""
 ###### 【考場指標】滿意度
 with st.expander("Q24. 【考場指標】滿意度:"):
     # df_admission.iloc[:,23] ## 
-    column_index = 0
+    column_index = 23
     item_name = "【考場指標】滿意度"
     column_title.append(df_admission.columns[column_index][0:])
 
