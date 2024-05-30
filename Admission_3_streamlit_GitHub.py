@@ -1655,5 +1655,42 @@ st.markdown("""
 <p class="bold-small-font">第二階段甄試服務滿意度</p>
 """, unsafe_allow_html=True)
 
+###### 【考場指標】滿意度
+with st.expander("Q24. 【考場指標】滿意度:"):
+    # df_admission.iloc[:,23] ## 
+    column_index = 0
+    item_name = "【考場指標】滿意度"
+    column_title.append(df_admission.columns[column_index][0:])
+
+
+    ##### 產出 result_df
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)
+
+    ##### 存到 list 'df_streamlit'
+    df_streamlit.append(result_df)  
+
+    ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
+    # st.write(choice)
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    st.markdown("##")  ## 更大的间隔
+
+    ##### 使用Streamlit畫單一圖 & 比較圖
+    # #### 畫比較圖時, 比較單位之選擇:
+    # if 系_院_校 == '0':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    # if 系_院_校 == '1':
+    #     ## 使用multiselect组件让用户进行多重选择
+    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+
+    # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
+    # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
+    Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 16, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
+    
+st.markdown("##")  ## 更大的间隔 
+
  
 
