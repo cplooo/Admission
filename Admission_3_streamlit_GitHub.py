@@ -826,9 +826,9 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 # index = r + i * bar_width
                 # if 系_院_校 == '0' or '1':
                 rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-        if 系_院_校 == '2':
-            index = np.arange(len(desired_order))
-            rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
+        # if 系_院_校 == '2':
+        #     index = np.arange(len(desired_order))
+        #     rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
