@@ -495,8 +495,8 @@ elif 系_院_校 == '1':
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
     # combined_df = pd.concat(dataframes, keys=selected_options)
 elif 系_院_校 == '2':
-    # choice = '全校'
-    choice = st.selectbox('選擇:全校', university_list, index=0)
+    choice = '全校'
+    # choice = st.selectbox('選擇:全校', university_list, index=0)
     # if choice !='全校':
     #     df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]
     # if choice !='全校':
