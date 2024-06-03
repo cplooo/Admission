@@ -486,7 +486,7 @@ elif 系_院_校 == '1':
     choice = st.selectbox('選擇學院', faculties_list, index=0)
     #choice = '管理'
     # df_admission = df_admission_original[df_admission_original['學院']==choice]
-    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## 挑出全校所屬學院之資料
+    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission' 缺漏
     # df_admission_whole = df_admission
     # df_admission_faculty_whole = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
     df_admission_faculty = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
@@ -502,8 +502,8 @@ elif 系_院_校 == '2':
     # if choice !='全校':
     #     df_admission = df_admission_original
     
-    df_admission = df_admission_original
-    df_admission_faculty = df_admission
+    df_admission = df_admission_original  ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission' 缺漏
+    df_admission_faculty = df_admission  ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
 
 
 df_streamlit = []
@@ -1146,6 +1146,13 @@ with st.expander("Q2. 高中位置:"):
         ## 使用multiselect组件让用户进行多重选择
         # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+    if 系_院_校 == '2':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇: 全校 or 各院：', university_faculties_list, default=['全校','理學院'],key=str(column_index)+'university')
+
+
+
 
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
