@@ -937,7 +937,7 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
     # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
     #### 只看所選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
-    desired_order  = [item for item in dataframes[0]['項目'].tolist()]  ## 只看所選擇學系的項目
+    desired_order  = [item for item in dataframes[1]['項目'].tolist()]  ## dataframes[1]['項目']比dataframes[0]['項目']的項目多.
     desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
     ## 缺的項目值加以擴充， 並統一一樣的項目次序
     dataframes = [adjust_df(df, desired_order) for df in dataframes]
@@ -954,7 +954,7 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     #### 设置条形的宽度
     # bar_width = 0.2
     #### 设置y轴的位置
-    r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+    r = np.arange(len(dataframes[1]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
     # #### 设置字体大小
     # title_fontsize = title_fontsize ##15
     # xlabel_fontsize = xlabel_fontsize  ##14
@@ -999,10 +999,10 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     ### 设置x,y轴刻度标签
     ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
     if fontsize_adjust==0:
-        ax.set_yticklabels(dataframes[0]['項目'].values)
+        ax.set_yticklabels(desired_order)
         ax.tick_params(axis='x')
     if fontsize_adjust==1:
-        ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+        ax.set_yticklabels(desired_order, fontsize=yticklabel_fontsize)
         ## 设置x轴刻度的字体大小
         ax.tick_params(axis='x', labelsize=xticklabel_fontsize)
     # ax.set_yticklabels(dataframes[0]['項目'].values)
@@ -1417,7 +1417,7 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
         df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
         # df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
         # df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
-        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
+        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]  ## 沒用到
     if 系_院_校 == '1':
         # df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
         # df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
@@ -1440,7 +1440,7 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
 
     ##### 使用Streamlit展示DataFrame "result_df"，但不显示索引
     # st.write(choice)
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(f"<h6>{selected_options}</h6>", unsafe_allow_html=True)
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
@@ -1457,8 +1457,9 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
 
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
+    # Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     # Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name='', rank=True, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)    
+    Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)   
 st.markdown("##")  ## 更大的间隔 
 
 
