@@ -860,7 +860,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         plt.tight_layout()
         # plt.show()
         ### 在Streamlit中显示
-        st.pyplot(plt)
+        if 系_院_校 == '0' or '1':
+            st.pyplot(plt)
 
 
 
