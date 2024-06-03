@@ -783,7 +783,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             combined_df = pd.concat(dataframes, keys=selected_options)
         elif 系_院_校 == '2':
             collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校']
-            collections = [df_admission_original] + collections
+            # collections = [df_admission_original] + collections
             
             if rank == True:
                 dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
