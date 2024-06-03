@@ -739,62 +739,63 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
 
     ##### 使用streamlit 畫比較圖 (全校的群體不會畫出比較圖)
     # st.subheader("不同單位比較")
-    if 系_院_校 == '0':
-        collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
-        
-        if rank == True:
-            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
-        else:
-            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
-
-
-        # #### 只看第一個選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
-        # desired_order  = [item for item in dataframes[0]['項目'].tolist()]  ## 只看第一個選擇學系的項目
-        # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
-        ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-        ## 缺的項目值加以擴充， 並統一一樣的項目次序
-        dataframes = [adjust_df(df, desired_order) for df in dataframes]
-        combined_df = pd.concat(dataframes, keys=selected_options)
-    elif 系_院_校 == '1':
-        collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
-        
-        if rank == True:
-            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
-        else:
-            dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
-
-        
-        ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-        ## 缺的項目值加以擴充， 並統一一樣的項目次序
-        dataframes = [adjust_df(df, desired_order) for df in dataframes]        
-        combined_df = pd.concat(dataframes, keys=selected_options)
-        
-    # 获取level 0索引的唯一值并保持原始顺序
-    unique_level0 = combined_df.index.get_level_values(0).unique()
-
-    #### 設置 matplotlib 支持中文的字體: 
-    # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
-    # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
-    # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
-    matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
-    matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
-    # #### 设置条形的宽度
-    # bar_width = 0.2
-    #### 设置y轴的位置
-    r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
-    # #### 设置字体大小
-    # title_fontsize = 15
-    # xlabel_fontsize = 14
-    # ylabel_fontsize = 14
-    # xticklabel_fontsize = 14
-    # yticklabel_fontsize = 14
-    # annotation_fontsize = 8
-    # legend_fontsize = 14
-    
     ### 系或院群體才會畫比較圖:
     if 系_院_校 == '0' or '1':
+        if 系_院_校 == '0':
+            collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
+            
+            if rank == True:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
+            else:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+    
+    
+            # #### 只看第一個選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
+            # desired_order  = [item for item in dataframes[0]['項目'].tolist()]  ## 只看第一個選擇學系的項目
+            # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+            ## 形成所有學系'項目'欄位的所有值
+            desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+            ## 缺的項目值加以擴充， 並統一一樣的項目次序
+            dataframes = [adjust_df(df, desired_order) for df in dataframes]
+            combined_df = pd.concat(dataframes, keys=selected_options)
+        elif 系_院_校 == '1':
+            collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
+            
+            if rank == True:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
+            else:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+    
+            
+            ## 形成所有學系'項目'欄位的所有值
+            desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+            ## 缺的項目值加以擴充， 並統一一樣的項目次序
+            dataframes = [adjust_df(df, desired_order) for df in dataframes]        
+            combined_df = pd.concat(dataframes, keys=selected_options)
+            
+        # 获取level 0索引的唯一值并保持原始顺序
+        unique_level0 = combined_df.index.get_level_values(0).unique()
+    
+        #### 設置 matplotlib 支持中文的字體: 
+        # matplotlib.rcParams['font.family'] = 'Microsoft YaHei'
+        # matplotlib.rcParams['font.sans-serif'] = ['Microsoft YaHei']
+        # matplotlib.rcParams['axes.unicode_minus'] = False  # 解決負號顯示問題
+        matplotlib.rcParams['font.family'] = 'Noto Sans CJK JP'
+        matplotlib.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
+        # #### 设置条形的宽度
+        # bar_width = 0.2
+        #### 设置y轴的位置
+        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        # #### 设置字体大小
+        # title_fontsize = 15
+        # xlabel_fontsize = 14
+        # ylabel_fontsize = 14
+        # xticklabel_fontsize = 14
+        # yticklabel_fontsize = 14
+        # annotation_fontsize = 8
+        # legend_fontsize = 14
+        
+    
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(width3, heigh3))
         # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
