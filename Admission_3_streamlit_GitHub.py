@@ -452,7 +452,7 @@ faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科�
 ###### 選擇
 # 系_院_校 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
 # 系_院_校 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
-系_院_校 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: 以學系查詢時同時呈現學院及全校資料): ', value='0')
+系_院_校 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: (i)以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位.): ', value='0')
 
 
 if 系_院_校 == '0':
@@ -737,7 +737,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
 
 
 
-    ##### 使用streamlit 畫比較圖
+    ##### 使用streamlit 畫比較圖 (全校的群體不會畫出比較圖)
     # st.subheader("不同單位比較")
     if 系_院_校 == '0':
         collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
@@ -792,71 +792,74 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # yticklabel_fontsize = 14
     # annotation_fontsize = 8
     # legend_fontsize = 14
-    #### 绘制条形
-    fig, ax = plt.subplots(figsize=(width3, heigh3))
-    # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-    for i, college_name in enumerate(unique_level0):            
-        df = combined_df.loc[college_name]
-        # 计算当前分组的条形数量
-        num_bars = len(df)
-        # 生成当前分组的y轴位置
-        index = np.arange(num_bars) + i * bar_width
-        # index = r + i * bar_width
-        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-
-        # # 在每个条形上标示比例
-        # for rect, ratio in zip(rects, df['比例']):
-        #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
-    ### 添加图例
-    if fontsize_adjust==0:
-        ax.legend()
-    if fontsize_adjust==1:
-        ax.legend(fontsize=legend_fontsize)
     
-
-    # ### 添加x轴标签
-    # ## 计算每个组的中心位置作为x轴刻度位置
-    # # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
-    # # group_centers = np.arange(len(dataframes[0]))
-    # ## 添加x轴标签
-    # # ax.set_xticks(group_centers)
-    # # dataframes[0]['項目'].values
-    # # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
-    # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
-    # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
-    # # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
-
-    ### 设置x,y轴刻度标签
-    ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
-    if fontsize_adjust==0:
-        # ax.set_yticklabels(dataframes[0]['項目'].values) 
-        ax.set_yticklabels(desired_order)
-        ax.tick_params(axis='x')
-    if fontsize_adjust==1:
-        # ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
-        ax.set_yticklabels(desired_order, fontsize=yticklabel_fontsize)
-        ## 设置x轴刻度的字体大小
-        ax.tick_params(axis='x', labelsize=xticklabel_fontsize)
+    ### 系或院群體才會畫比較圖:
+    if 系_院_校 == '0' or '1':
+        #### 绘制条形
+        fig, ax = plt.subplots(figsize=(width3, heigh3))
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的y轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+    
+            # # 在每个条形上标示比例
+            # for rect, ratio in zip(rects, df['比例']):
+            #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
+        ### 添加图例
+        if fontsize_adjust==0:
+            ax.legend()
+        if fontsize_adjust==1:
+            ax.legend(fontsize=legend_fontsize)
         
     
-
-
-    ### 设置标题和轴标签
-    if fontsize_adjust==0:
-        ax.set_title(item_name)
-        ax.set_xlabel('比例')
-    if fontsize_adjust==1:
-        ax.set_title(item_name,fontsize=title_fontsize)
-        ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+        # ### 添加x轴标签
+        # ## 计算每个组的中心位置作为x轴刻度位置
+        # # group_centers = r + bar_width * (num_colleges / 2 - 0.5)
+        # # group_centers = np.arange(len(dataframes[0]))
+        # ## 添加x轴标签
+        # # ax.set_xticks(group_centers)
+        # # dataframes[0]['項目'].values
+        # # "array(['個人興趣', '未來能找到好工作', '落點分析', '沒有特定理由', '家人的期望與建議', '師長推薦'],dtype=object)"
+        # ax.set_xticks(r + bar_width * (len(dataframes) / 2))
+        # ax.set_xticklabels(dataframes[0]['項目'].values, fontsize=xticklabel_fontsize)
+        # # ax.set_xticklabels(['非常滿意', '滿意', '普通', '不滿意','非常不滿意'],fontsize=xticklabel_fontsize)
+    
+        ### 设置x,y轴刻度标签
+        ax.set_yticks(r + bar_width*(len(dataframes) / 2))  # 调整位置以使标签居中对齐到每个条形
+        if fontsize_adjust==0:
+            # ax.set_yticklabels(dataframes[0]['項目'].values) 
+            ax.set_yticklabels(desired_order)
+            ax.tick_params(axis='x')
+        if fontsize_adjust==1:
+            # ax.set_yticklabels(dataframes[0]['項目'].values, fontsize=yticklabel_fontsize)
+            ax.set_yticklabels(desired_order, fontsize=yticklabel_fontsize)
+            ## 设置x轴刻度的字体大小
+            ax.tick_params(axis='x', labelsize=xticklabel_fontsize)
+            
+        
     
     
-    
-    ### 显示网格线
-    plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
-    plt.tight_layout()
-    # plt.show()
-    ### 在Streamlit中显示
-    st.pyplot(plt)
+        ### 设置标题和轴标签
+        if fontsize_adjust==0:
+            ax.set_title(item_name)
+            ax.set_xlabel('比例')
+        if fontsize_adjust==1:
+            ax.set_title(item_name,fontsize=title_fontsize)
+            ax.set_xlabel('比例',fontsize=xlabel_fontsize)
+        
+        
+        
+        ### 显示网格线
+        plt.grid(True, linestyle='--', linewidth=0.5, color='gray')
+        plt.tight_layout()
+        # plt.show()
+        ### 在Streamlit中显示
+        st.pyplot(plt)
 
 
 
@@ -1073,16 +1076,16 @@ with st.expander("Q2. 高中位置:"):
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    ##### 使用Streamlit畫單一圖 & 比較圖
-    # #### 畫比較圖時, 比較單位之選擇:
-    # if 系_院_校 == '0':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    # if 系_院_校 == '1':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #### 使用Streamlit畫單一圖 & 比較圖
+    #### 畫比較圖時, 比較單位之選擇:
+    if 系_院_校 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    if 系_院_校 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
 
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
