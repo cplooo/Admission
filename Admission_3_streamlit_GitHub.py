@@ -773,7 +773,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             combined_df = pd.concat(dataframes, keys=selected_options)
         elif 系_院_校 == '2':
-            collections = [df_admission_original,df_admission_original]
+            collections = [df_admission_original]
             
             if rank == True:
                 dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -786,7 +786,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             ## 缺的項目值加以擴充， 並統一一樣的項目次序
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             # combined_df = pd.concat(dataframes, keys=selected_options)
-            combined_df = pd.concat(dataframes, keys=['全校','全校'])
+            combined_df = pd.concat(dataframes, keys=['全校'])
 
             
         # 获取level 0索引的唯一值并保持原始顺序
