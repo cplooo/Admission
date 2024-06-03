@@ -1061,7 +1061,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    #### 使用Streamlit畫單一圖 & 比較圖
+    ##### 使用Streamlit畫單一圖 & 比較圖
     #### 畫比較圖時, 比較單位之選擇:
     if 系_院_校 == '0':
         ## 使用multiselect组件让用户进行多重选择
@@ -1136,7 +1136,7 @@ with st.expander("Q2. 高中位置:"):
     st.write(result_df.to_html(index=False), unsafe_allow_html=True)
     st.markdown("##")  ## 更大的间隔
 
-    #### 使用Streamlit畫單一圖 & 比較圖
+    ##### 使用Streamlit畫單一圖 & 比較圖
     #### 畫比較圖時, 比較單位之選擇:
     if 系_院_校 == '0':
         ## 使用multiselect组件让用户进行多重选择
@@ -1185,15 +1185,20 @@ with st.expander("Q3. 高中別:"):
     st.markdown("##")  ## 更大的间隔
 
     ##### 使用Streamlit畫單一圖 & 比較圖
-    # #### 畫比較圖時, 比較單位之選擇:
-    # if 系_院_校 == '0':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    #     selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
-    # if 系_院_校 == '1':
-    #     ## 使用multiselect组件让用户进行多重选择
-    #     # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-    #     selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+    #### 畫比較圖時, 比較單位之選擇:
+    if 系_院_校 == '0':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學系：', df_admission_original['科系'].unique(), default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+        selected_options = st.multiselect('選擇比較學系：', departments_list, default=[choice,'企業管理學系'],key=str(column_index)+'d')  ## # selected_options = ['化科系','企管系']
+    if 系_院_校 == '1':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇比較學院：', faculties_list, default=[choice,'資訊學院'],key=str(column_index)+'f')
+    if 系_院_校 == '2':
+        ## 使用multiselect组件让用户进行多重选择
+        # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
+        selected_options = st.multiselect('選擇: 全校 or 各院：', university_faculties_list, default=['全校','理學院'],key=str(column_index)+'university')
+
 
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
