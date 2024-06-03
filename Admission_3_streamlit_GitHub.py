@@ -783,7 +783,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 
             ## 形成所有學系'項目'欄位的所有值
             desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-            desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+            # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
             ## 缺的項目值加以擴充， 並統一一樣的項目次序
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             # combined_df = pd.concat(dataframes, keys=selected_options)
@@ -839,7 +839,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 # index = r + i * bar_width
                 # if 系_院_校 == '0' or '1':
                 # rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
-                rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+                if i==0:
+                    rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
         
     
             # # 在每个条形上标示比例
