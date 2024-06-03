@@ -486,7 +486,7 @@ elif 系_院_校 == '1':
     choice = st.selectbox('選擇學院', faculties_list, index=0)
     #choice = '管理'
     # df_admission = df_admission_original[df_admission_original['學院']==choice]
-    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission' 缺漏
+    df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]  ## ## 
     # df_admission_whole = df_admission
     # df_admission_faculty_whole = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
     df_admission_faculty = df_admission   ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
@@ -502,7 +502,7 @@ elif 系_院_校 == '2':
     # if choice !='全校':
     #     df_admission = df_admission_original
     
-    df_admission = df_admission_original  ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission' 缺漏
+    df_admission = df_admission_original  ## 
     df_admission_faculty = df_admission  ## 沒有用途, 只是為了不要讓 Draw() 中的參數 'df_admission_faculty' 缺漏
 
 
@@ -750,7 +750,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # st.subheader("不同單位比較")    
     # if 系_院_校 == '0' or '1' or '2':
     if 系_院_校 == '0':
-        collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission[df_admission['科系'].str.contains(i, regex=True)] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -770,7 +770,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '1':
-        collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission[df_admission['學院'].str.contains(i, regex=True)] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -788,7 +788,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     elif 系_院_校 == '2':
         # collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校' else df_admission_original]
         # collections = [df_admission_original] + collections
-        collections = [df_admission_original if i == '全校' else df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission if i == '全校' else df_admission[df_admission['學院'].str.contains(i, regex=True)] for i in selected_options]
 
         
         if rank == True:
