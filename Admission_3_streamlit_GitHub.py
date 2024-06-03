@@ -449,6 +449,9 @@ departments_list = ['台灣文學系',
 
 faculties_list = ['理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
 
+university_list = ['全校']
+university_faculties_list = ['全校','理學院','資訊學院','管理學院','人文暨社會科學院','外語學院','國際學院']
+
 ###### 選擇
 # 系_院_校 = st.text_input('以學系查詢請輸入 0, 以學院查詢請輸入 1, 以全校查詢請輸入 2 (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
 # 系_院_校 = st.text_input('以學系查詢請輸入 0, 學院查詢建置中  (說明: (i).以學系查詢時同時呈現學院及全校資料. (ii)可以選擇比較單位): ', value='0')
@@ -492,7 +495,13 @@ elif 系_院_校 == '1':
     # dataframes = [Frequency_Distribution(df, 7) for df in collections]
     # combined_df = pd.concat(dataframes, keys=selected_options)
 elif 系_院_校 == '2':
-    choice = '全校'
+    # choice = '全校'
+    choice = st.selectbox('選擇:全校', university_list, index=0)
+    # if choice !='全校':
+    #     df_admission = df_admission_original[df_admission_original['學院'].str.contains(choice, regex=True)]
+    # if choice !='全校':
+    #     df_admission = df_admission_original
+    
     df_admission = df_admission_original
     df_admission_faculty = df_admission
 
@@ -773,7 +782,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             combined_df = pd.concat(dataframes, keys=selected_options)
         elif 系_院_校 == '2':
-            collections = [df_admission_original]
+            collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校']
+            collections = [df_admission_original] + collections
             
             if rank == True:
                 dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -783,11 +793,11 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 
             ## 形成所有學系'項目'欄位的所有值
             desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-            desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+            # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
             ## 缺的項目值加以擴充， 並統一一樣的項目次序
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
-            # combined_df = pd.concat(dataframes, keys=selected_options)
-            combined_df = pd.concat(dataframes, keys=['全校'])
+            combined_df = pd.concat(dataframes, keys=selected_options)
+            # combined_df = pd.concat(dataframes, keys=['全校'])
 
             
         # 获取level 0索引的唯一值并保持原始顺序
@@ -839,20 +849,20 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 # index = r + i * bar_width
                 # if 系_院_校 == '0' or '1':
                 # rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
-                if i==0:
-                    rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+                # if i==0:
+                rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
         
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
             #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
         
-        if 系_院_校 == '0' or '1':
-            ### 添加图例
-            if fontsize_adjust==0:
-                ax.legend()
-            if fontsize_adjust==1:
-                ax.legend(fontsize=legend_fontsize)
+        # if 系_院_校 == '0' or '1':
+        ### 添加图例
+        if fontsize_adjust==0:
+            ax.legend()
+        if fontsize_adjust==1:
+            ax.legend(fontsize=legend_fontsize)
         
     
         # ### 添加x轴标签
@@ -1062,7 +1072,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     if 系_院_校 == '2':
         ## 使用multiselect组件让用户进行多重选择
         # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-        selected_options = st.multiselect('選擇全校：', ['全校','全校'], default=[choice,'全校'],key=str(column_index)+'university')
+        selected_options = st.multiselect('選擇: 全校 or 各院：', university_faculties_list, default=['全校','理學院'],key=str(column_index)+'university')
 
 
 
