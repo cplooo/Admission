@@ -773,7 +773,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             combined_df = pd.concat(dataframes, keys=selected_options)
         elif 系_院_校 == '2':
-            collections = [df_admission_original]
+            collections = [df_admission_original,df_admission_original]
             
             if rank == True:
                 dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -781,12 +781,12 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
         
                 
-                ## 形成所有學系'項目'欄位的所有值
-                desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-                ## 缺的項目值加以擴充， 並統一一樣的項目次序
-                dataframes = [adjust_df(df, desired_order) for df in dataframes]        
-                # combined_df = pd.concat(dataframes, keys=selected_options)
-                # combined_df = pd.concat(dataframes)
+            ## 形成所有學系'項目'欄位的所有值
+            desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+            ## 缺的項目值加以擴充， 並統一一樣的項目次序
+            dataframes = [adjust_df(df, desired_order) for df in dataframes]        
+            # combined_df = pd.concat(dataframes, keys=selected_options)
+            combined_df = pd.concat(dataframes, keys=['全校','全校'])
 
             
         # 获取level 0索引的唯一值并保持原始顺序
@@ -826,9 +826,19 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 # index = r + i * bar_width
                 # if 系_院_校 == '0' or '1':
                 rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-        # if 系_院_校 == '2':
+        if 系_院_校 == '2':
         #     index = np.arange(len(desired_order))
         #     rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
+            for i, college_name in enumerate(unique_level0):            
+                df = combined_df.loc[college_name]
+                # 计算当前分组的条形数量
+                num_bars = len(df)
+                # 生成当前分组的y轴位置
+                index = np.arange(num_bars) + i * bar_width
+                # index = r + i * bar_width
+                # if 系_院_校 == '0' or '1':
+                rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
+        
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
