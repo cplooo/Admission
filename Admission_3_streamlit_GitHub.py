@@ -785,7 +785,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
                 desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
                 ## 缺的項目值加以擴充， 並統一一樣的項目次序
                 dataframes = [adjust_df(df, desired_order) for df in dataframes]        
-                combined_df = pd.concat(dataframes, keys=selected_options)
+                # combined_df = pd.concat(dataframes, keys=selected_options)
+                combined_df = pd.concat(dataframes)
 
             
         # 获取level 0索引的唯一值并保持原始顺序
@@ -800,7 +801,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # #### 设置条形的宽度
         # bar_width = 0.2
         #### 设置y轴的位置
-        r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        # r = np.arange(len(dataframes[0]))  ## len(result_df_理學_rr)=6, 因為result_df_理學_rr 有 6個 row: 非常滿意, 滿意, 普通, 不滿意, 非常不滿意
+        r = np.arange(len(desired_order))
         # #### 设置字体大小
         # title_fontsize = 15
         # xlabel_fontsize = 14
