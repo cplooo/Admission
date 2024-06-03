@@ -936,9 +936,15 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     ## 形成所有學系'項目'欄位的所有值
     # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()]))
     # desired_order  = list(set([item for item in dataframes[0]['項目'].tolist()])) 
-    #### 只看所選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
-    desired_order  = [item for item in dataframes[1]['項目'].tolist()]  ## dataframes[1]['項目']比dataframes[0]['項目']的項目多.
+    desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
     desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+    # #### 只看所選擇學系的項目(已經是按照次數高至低的項目順序排列), 並且反轉次序使得表與圖的項目次序一致
+    # desired_order  = [item for item in dataframes[1]['項目'].tolist()]  ## dataframes[1]['項目']比dataframes[0]['項目']的項目多.
+    # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
+     
+    
+    
+    
     ## 缺的項目值加以擴充， 並統一一樣的項目次序
     dataframes = [adjust_df(df, desired_order) for df in dataframes]
     combined_df = pd.concat(dataframes, keys=['重點高中','所有高中'])
