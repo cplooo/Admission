@@ -846,11 +846,13 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
             #     ax.text(rect.get_x() + rect.get_width() / 2.0, rect.get_height(), f'{ratio:.1%}', ha='center', va='bottom',fontsize=annotation_fontsize)
-        ### 添加图例
-        if fontsize_adjust==0:
-            ax.legend()
-        if fontsize_adjust==1:
-            ax.legend(fontsize=legend_fontsize)
+        
+        if 系_院_校 == '0' or '1':
+            ### 添加图例
+            if fontsize_adjust==0:
+                ax.legend()
+            if fontsize_adjust==1:
+                ax.legend(fontsize=legend_fontsize)
         
     
         # ### 添加x轴标签
