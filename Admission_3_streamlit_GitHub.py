@@ -828,31 +828,31 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     
         #### 绘制条形
         fig, ax = plt.subplots(figsize=(width3, heigh3))
-        if 系_院_校 == '0' or '1':
-            # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
-            for i, college_name in enumerate(unique_level0):            
-                df = combined_df.loc[college_name]
-                # 计算当前分组的条形数量
-                num_bars = len(df)
-                # 生成当前分组的y轴位置
-                index = np.arange(num_bars) + i * bar_width
-                # index = r + i * bar_width
-                # if 系_院_校 == '0' or '1':
-                rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-        if 系_院_校 == '2':
-        #     index = np.arange(len(desired_order))
-        #     rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
-            for i, college_name in enumerate(unique_level0):            
-                df = combined_df.loc[college_name]
-                # 计算当前分组的条形数量
-                num_bars = len(df)
-                # 生成当前分组的y轴位置
-                index = np.arange(num_bars) + i * bar_width
-                # index = r + i * bar_width
-                # if 系_院_校 == '0' or '1':
-                # rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
-                # if i==0:
-                rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        # if 系_院_校 == '0' or '1':
+        # for i, (college_name, df) in enumerate(combined_df.groupby(level=0)):
+        for i, college_name in enumerate(unique_level0):            
+            df = combined_df.loc[college_name]
+            # 计算当前分组的条形数量
+            num_bars = len(df)
+            # 生成当前分组的y轴位置
+            index = np.arange(num_bars) + i * bar_width
+            # index = r + i * bar_width
+            # if 系_院_校 == '0' or '1':
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        # if 系_院_校 == '2':
+        # #     index = np.arange(len(desired_order))
+        # #     rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
+        #     for i, college_name in enumerate(unique_level0):            
+        #         df = combined_df.loc[college_name]
+        #         # 计算当前分组的条形数量
+        #         num_bars = len(df)
+        #         # 生成当前分组的y轴位置
+        #         index = np.arange(num_bars) + i * bar_width
+        #         # index = r + i * bar_width
+        #         # if 系_院_校 == '0' or '1':
+        #         # rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
+        #         # if i==0:
+        #         rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
         
     
             # # 在每个条形上标示比例
