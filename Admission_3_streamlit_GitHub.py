@@ -821,7 +821,10 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             # 生成当前分组的y轴位置
             index = np.arange(num_bars) + i * bar_width
             # index = r + i * bar_width
-            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+            if 系_院_校 == '0' or '1':
+                rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+            if 系_院_校 == '2':
+                rects = ax.barh(index, df['比例'], height=bar_width, label='全校')
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
