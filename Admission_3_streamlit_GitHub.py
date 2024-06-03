@@ -1062,7 +1062,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     if 系_院_校 == '2':
         ## 使用multiselect组件让用户进行多重选择
         # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
-        selected_options = st.multiselect('選擇全校：', ['全校'], default=[choice],key=str(column_index)+'university')
+        selected_options = st.multiselect('選擇全校：', ['全校','全校'], default=[choice,'全校'],key=str(column_index)+'university')
 
 
 
