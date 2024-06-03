@@ -1206,21 +1206,26 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
     rank_number = 5
     highlight_schools = ['清水高中','龍津高中','中港高中','弘文高中','新民高中','僑泰高中','立人高中']
     selected_options = st.multiselect('選擇比較高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools')
+    
     item_name = f"{selected_options}參與靜宜大學申請入學主要原因(複選)"
     
     ##### 產出 result_df: 加條件: Q10回答有 '有收到' 者, 才能進行此題Q11
     if 系_院_校 == '0':
         # df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        # df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
         # df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        # df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
     if 系_院_校 == '1':
         # df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        # df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
         df_admission_faculty_restrict = df_admission_restrict  ## 沒有作用
     if 系_院_校 == '2':
         # df_admission_restrict = df_admission[df_admission['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
-        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        # df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].str.contains(selected_options, regex=True)]
+        df_admission_restrict = df_admission[df_admission['請問您的高中學校全名 ?'].apply(lambda x: any(school in x for school in selected_options))]
         df_admission_faculty_restrict = df_admission_restrict  ## 沒有作用
 
     
