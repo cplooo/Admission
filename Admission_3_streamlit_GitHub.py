@@ -762,8 +762,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # desired_order  = [item for item in dataframes[0]['項目'].tolist()]  ## 只看第一個選擇學系的項目
         # desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
         ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-        # desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
 
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
@@ -779,8 +779,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
 
         
         ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-        # desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]        
@@ -798,8 +798,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     
             
         ## 形成所有學系'項目'欄位的所有值
-        desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
-        # desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
+        # desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+        desired_order  = list(dict.fromkeys([item for df in dataframes for item in df['項目'].tolist()]))
         desired_order = desired_order[::-1]  ## 反轉次序使得表與圖的項目次序一致
         ## 缺的項目值加以擴充， 並統一一樣的項目次序
         dataframes = [adjust_df(df, desired_order) for df in dataframes]        
