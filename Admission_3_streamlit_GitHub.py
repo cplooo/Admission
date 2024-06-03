@@ -1205,7 +1205,7 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
     # set(df_admission_original['科系'])
     rank_number = 5
     highlight_schools = ['清水高中','龍津高中','中港高中','弘文高中','新民高中','僑泰高中','立人高中']
-    selected_options = st.multiselect('選擇比較高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools')
+    selected_options = st.multiselect('選擇比較高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools_1')
     item_name = f"{selected_options} 參與靜宜大學申請入學主要原因(複選)"
     
     ##### 產出 result_df: 加條件: 挑選出 selected_options 中的特定高中
@@ -1311,7 +1311,7 @@ with st.expander("Q8-特定高中. 特定高中認識與瞭解靜宜大學的管
     # set(df_admission_original['科系'])
     rank_number = 5
     highlight_schools = ['清水高中','龍津高中','中港高中','弘文高中','新民高中','僑泰高中','立人高中']
-    selected_options = st.multiselect('選擇比較高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools')
+    selected_options = st.multiselect('選擇比較高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools_2')
     item_name = f"{selected_options} 認識與瞭解靜宜大學的管道(複選)"
 
     ##### 產出 result_df: 加條件: 挑選出 selected_options 中的特定高中
