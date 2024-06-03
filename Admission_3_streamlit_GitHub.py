@@ -740,7 +740,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     ##### 使用streamlit 畫比較圖 (全校的群體不會畫出比較圖)
     # st.subheader("不同單位比較")
     ### 系或院群體才會畫比較圖:
-    if 系_院_校 == '0' or '1':
+    if 系_院_校 == '0' or '1' or '2':
         if 系_院_校 == '0':
             collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
             
@@ -772,6 +772,21 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             ## 缺的項目值加以擴充， 並統一一樣的項目次序
             dataframes = [adjust_df(df, desired_order) for df in dataframes]        
             combined_df = pd.concat(dataframes, keys=selected_options)
+        elif 系_院_校 == '2':
+            collections = []
+            
+            if rank == True:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
+            else:
+                dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice) for df in collections]
+        
+                
+                ## 形成所有學系'項目'欄位的所有值
+                desired_order  = list(set([item for df in dataframes for item in df['項目'].tolist()])) 
+                ## 缺的項目值加以擴充， 並統一一樣的項目次序
+                dataframes = [adjust_df(df, desired_order) for df in dataframes]        
+                combined_df = pd.concat(dataframes, keys=selected_options)
+
             
         # 获取level 0索引的唯一值并保持原始顺序
         unique_level0 = combined_df.index.get_level_values(0).unique()
@@ -860,9 +875,11 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         plt.tight_layout()
         # plt.show()
         ### 在Streamlit中显示
-        if 系_院_校 == '0' or '1':
-            st.pyplot(plt)
+        # if 系_院_校 == '0' or '1':
+        st.pyplot(plt)
 
+
+        
 
 
 
