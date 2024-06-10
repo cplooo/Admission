@@ -750,7 +750,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # st.subheader("不同單位比較")    
     # if 系_院_校 == '0' or '1' or '2':
     if 系_院_校 == '0':
-        collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission_original[df_admission_original['科系']==i] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -770,7 +770,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '1':
-        collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission_original[df_admission_original['學院']==i] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -788,7 +788,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     elif 系_院_校 == '2':
         # collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校' else df_admission_original]
         # collections = [df_admission_original] + collections
-        collections = [df_admission_original if i == '全校' else df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission_original if i == '全校' else df_admission_original[df_admission_original['學院']==i] for i in selected_options]
 
         
         if rank == True:
