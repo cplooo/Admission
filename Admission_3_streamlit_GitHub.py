@@ -521,7 +521,7 @@ st.markdown("##")  ## 更大的间隔
 ####### 定義相關函數 (Part 2): 因為函數 'Draw' 的定義需要使用 'dataframes','combined_df' 來進行相關計算, 因此要放在以上 '預先設定' 之後才會有 'dataframes', 'combined_df' 的值
 ###### 畫圖形(單一學系或學院, 比較圖形)
 @st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
-def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=pd.DataFrame(), selected_options=[], dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty, desired_order=desired_order):
+def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=pd.DataFrame(), selected_options=[], dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.2, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty, desired_order=desired_orde, for_comparison=df_admission_original):
     ##### 使用Streamlit畫單一圖
     if 系_院_校 == '0':
         collections = [df_admission, df_admission_faculty, df_admission_original]
@@ -749,8 +749,9 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     ##### 使用streamlit 畫比較圖 
     # st.subheader("不同單位比較")    
     # if 系_院_校 == '0' or '1' or '2':
+    ## 以下選擇單位要從 df_admission_original 選, 若從df_admission選擇, 就是限定某單位了, 再從此單位去選別單位, 是選不到的.
     if 系_院_校 == '0':
-        collections = [df_admission[df_admission['科系']==i] for i in selected_options]
+        collections = [for_comparison[for_comparison['科系']==i] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -770,7 +771,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '1':
-        collections = [df_admission[df_admission['學院']==i] for i in selected_options]
+        collections = [for_comparison[for_comparison['學院']==i] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -788,7 +789,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     elif 系_院_校 == '2':
         # collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校' else df_admission_original]
         # collections = [df_admission_original] + collections
-        collections = [df_admission if i == '全校' else df_admission[df_admission['學院']==i] for i in selected_options]
+        collections = [for_comparison if i == '全校' else for_comparison[for_comparison['學院']==i] for i in selected_options]
 
         
         if rank == True:
@@ -1746,9 +1747,14 @@ with st.expander("Q11. 一階篩選通過學系之聯絡，是否提升參加第
         # selected_options = st.multiselect('選擇比較學院：', df_admission_original['學院'].unique(), default=[choice,'資訊學院'],key=str(column_index)+'f')
         selected_options = st.multiselect('比較選擇: 全校 or 各院：', university_faculties_list, default=['全校','理學院'],key=str(column_index)+'university')
 
+
+    ##### Q10回答有 '有收到' 者, 才能進行此題Q11
+    df_admission_original_restrict = df_admission_original[df_admission_original['申請入學一階篩選公告後，您是否有收到通過學系之聯絡以及後續招生流程的說明 ?']=='有收到']
+
+
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
+    Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict, for_comparison=df_admission_original_restrict)    
     
 st.markdown("##")  ## 更大的间隔
 
