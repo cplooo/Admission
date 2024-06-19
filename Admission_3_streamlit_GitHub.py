@@ -1866,12 +1866,15 @@ with st.expander("Q13. 參加甄試說明會對於瞭解以及選擇學系是否
     if 系_院_校 == '0':
         df_admission_restrict = df_admission[df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
         df_admission_faculty_restrict = df_admission_faculty[df_admission_faculty['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
+        df_admission_school_restrict = df_admission_original[df_admission_original['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
     if 系_院_校 == '1':
         df_admission_restrict = df_admission[df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
-        df_admission_faculty_restrict = df_admission_restrict  ## 沒有作用
+        df_admission_faculty_restrict = df_admission_restrict  ## 
+        df_admission_school_restrict = df_admission_original[df_admission_original['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
     if 系_院_校 == '2':
         df_admission_restrict = df_admission[df_admission['請問: 您是否有參加4/20或4/27靜宜大學舉辦之甄試說明會 ?']=='是']
-        df_admission_faculty_restrict = df_admission_restrict  ## 沒有作用
+        df_admission_faculty_restrict = df_admission_restrict  ## 
+        df_admission_school_restrict = df_admission_restrict
 
 
     result_df = Frequency_Distribution(df_admission_restrict, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
