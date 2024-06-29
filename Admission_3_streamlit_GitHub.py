@@ -1420,7 +1420,14 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
     selected_options = st.multiselect('選擇重點高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools_1')
     # item_name = f"{selected_options} 參與靜宜大學申請入學主要原因(複選)"
     # item_name = f"{', '.join(selected_options)} 參與靜宜大學申請入學主要原因(複選)"
-    item_name = "重點高中("+selected_options+") V.S.一般高中 參與靜宜大學申請入學主要原因(複選)"
+    # item_name = "重點高中("+selected_options+") V.S.一般高中 參與靜宜大學申請入學主要原因(複選)"
+
+    ##### 將列表中的元素用 "、" 分隔開
+    joined_options = '、'.join(selected_options)
+    
+    ##### 在前面和後面加上指定的字符串
+    item_name = f"重點高中({joined_options}) V.S.一般高中/所有高中 參與靜宜大學申請入學主要原因(複選)"
+
     
     ##### 產出 result_df: 加條件: 挑選出 selected_options 中的特定高中
     if 系_院_校 == '0':
