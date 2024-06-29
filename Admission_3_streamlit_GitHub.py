@@ -1610,7 +1610,10 @@ with st.expander("Q8-特定高中. 特定高中認識與瞭解靜宜大學的管
     selected_options = st.multiselect('選擇重點高中：', highlight_schools, default=['清水高中','龍津高中'],key='highlight_schools_2')
     # item_name = f"{selected_options} 認識與瞭解靜宜大學的管道(複選)"
     # item_name = f"{', '.join(selected_options)} 認識與瞭解靜宜大學的管道(複選)"
-    item_name = "重點高中 V.S.一般高中 認識與瞭解靜宜大學的管道(複選)"
+    ##### 將列表中的元素用 "、" 分隔開
+    joined_options = '、'.join(selected_options)
+    ##### 在前面和後面加上指定的字符串
+    item_name = f"重點高中({joined_options}) V.S.一般高中/所有高中 參與靜宜大學申請入學主要原因(複選)"
     
     ##### 產出 result_df: 加條件: 挑選出 selected_options 中的特定高中
     if 系_院_校 == '0':
@@ -1661,7 +1664,7 @@ with st.expander("Q8-特定高中. 特定高中認識與瞭解靜宜大學的管
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     # Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     # Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=True, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)    
-    Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict)   
+    Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict, selected_options=selected_options)   
 st.markdown("##")  ## 更大的间隔 
 
 
