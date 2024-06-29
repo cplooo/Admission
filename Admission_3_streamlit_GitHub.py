@@ -927,7 +927,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
 ###### 畫圖形(比較兩種群體圖形: df_admission_restrict, df_admission )
 @st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
 # def Draw_2(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=pd.DataFrame(), selected_options=[], dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty):
-def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission):
+def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission, selected_options):
 
     ##### 過濾掉 '請問您的高中學校全名 ?' 欄位中包含在 highlight_schools 中的資料
     df_admission_noHighlight = df_admission[~df_admission['請問您的高中學校全名 ?'].isin(highlight_schools)]
@@ -950,7 +950,10 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     
     ## 缺的項目值加以擴充， 並統一一樣的項目次序
     dataframes = [adjust_df(df, desired_order) for df in dataframes]
-    combined_df = pd.concat(dataframes, keys=['重點高中','一般高中(不含重點高中)','所有高中'])
+    ##### 將列表selected_options中的元素用 "、" 分隔開
+    joined_options = '、'.join(selected_options)
+    ##### 在前面和後面加上指定的字符串
+    combined_df = pd.concat(dataframes, keys=[f"重點高中({joined_options})",'一般高中(不含重點高中)','所有高中'])
     # 获取level 0索引的唯一值并保持原始顺序
     unique_level0 = combined_df.index.get_level_values(0).unique()
 
@@ -1478,7 +1481,7 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     # Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     # Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=True, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)    
-    Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict)   
+    Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict, selected_options)   
 st.markdown("##")  ## 更大的间隔 
 
 
