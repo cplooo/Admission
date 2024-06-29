@@ -925,9 +925,10 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
 
 
 ###### 畫圖形(比較兩種群體圖形: df_admission_restrict, df_admission )
+highlight_schools = ['清水高中','龍津高中','中港高中','弘文高中','新民高中','僑泰高中','立人高中','溪湖高中','大甲高中','道明中學']
 @st.cache_data(ttl=3600, show_spinner="正在處理資料...")  ## Add the caching decorator
 # def Draw_2(院_系, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=pd.DataFrame(), selected_options=[], dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty):
-def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission, selected_options):
+def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=False, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission, selected_options=highlight_schools):
 
     ##### 過濾掉 '請問您的高中學校全名 ?' 欄位中包含在 highlight_schools 中的資料
     df_admission_noHighlight = df_admission[~df_admission['請問您的高中學校全名 ?'].isin(highlight_schools)]
