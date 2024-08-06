@@ -291,6 +291,8 @@ def map_colleges(department):
 ##### 使用 apply 方法來應用該函數到科系欄位
 df_admission_original['學院'] = df_admission_original['科系'].apply(map_colleges)
 # set(df_admission_original['學院'])
+###### 将 DataFrame 保存为 Excel 文件
+df_admission_original.to_excel('df_admission_original.xlsx', index=False)
 
 
 
