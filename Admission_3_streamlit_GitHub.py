@@ -285,7 +285,7 @@ def map_colleges(department):
         for key, value in college_map.items():
             if key in dep.strip():  # 移除空白後檢查每個項目
                 colleges.append(value)
-    return ', '.join(set(colleges)) if colleges else '未知學院'
+    return ';'.join(set(colleges)) if colleges else '未知學院'
 
 
 ##### 使用 apply 方法來應用該函數到科系欄位
