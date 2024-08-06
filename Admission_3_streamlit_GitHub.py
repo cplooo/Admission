@@ -291,8 +291,8 @@ def map_colleges(department):
 ##### 使用 apply 方法來應用該函數到科系欄位
 df_admission_original['學院'] = df_admission_original['科系'].apply(map_colleges)
 # set(df_admission_original['學院'])
-###### 将 DataFrame 保存为 Excel 文件
-df_admission_original.to_excel('df_admission_original.xlsx', index=False)
+# ###### 将 DataFrame 保存为 Excel 文件
+# df_admission_original.to_excel('df_admission_original.xlsx', index=False)
 
 
 
@@ -784,7 +784,9 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '1':
-        collections = [df_admission_school[df_admission_school['學院']==i] for i in selected_options]
+        # collections = [df_admission_school[df_admission_school['學院']==i] for i in selected_options]
+        collections = [df_admission_school[df_admission_school['學院'].apply(lambda x: i in x.split(';'))] for i in selected_options]
+
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -802,8 +804,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     elif 系_院_校 == '2':
         # collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校' else df_admission_original]
         # collections = [df_admission_original] + collections
-        collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院']==i] for i in selected_options]
-
+        # collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院']==i] for i in selected_options]
+        collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院'].apply(lambda x: i in x.split(';'))] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
