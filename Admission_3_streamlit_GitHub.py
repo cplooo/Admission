@@ -309,9 +309,12 @@ df_admission_original['學院'] = df_admission_original['科系'].apply(map_coll
 
 # ###### 将 DataFrame 保存为 Excel 文件
 # df_admission_original.to_excel('df_admission_original_revised3.xlsx', index=False)
+df_admission = df_admission_original[df_admission_original['科系'].str.contains('財務工程學系', regex=True)]
+df_admission['科系']
+# df_admission.iloc[:,2]
+df_admission[df_admission['請問您的高中學校全名 ?']=='東莞臺商子弟學校']['科系']
 
-
-
+东莞台商子弟学校
 
 
 
@@ -791,8 +794,11 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # collections=[]
         # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
-        # collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options] 
-        collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
+        collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]
+        if 考生or親友or全部=='考生' or '陪考親友':
+            collections = [df[df['身分別']==考生or親友or全部] for df in collections]
+        
+        # collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
         # # 应用函数到每个 row
         # collections = [df_admission_school[df_admission_original['科系'].apply(lambda x: contains_choice(x, i, '\n'))] for i in selected_options]
 
@@ -818,7 +824,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # collections=[]
         # collections = [df_admission_school[df_admission_school['學院']==i] for i in selected_options]
         collections = [df_admission_school[df_admission_school['學院'].apply(lambda x: i in x.split(';'))] for i in selected_options]
-
+        if 考生or親友or全部=='考生' or '陪考親友':
+            collections = [df[df['身分別']==考生or親友or全部] for df in collections]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -839,6 +846,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # collections = [df_admission_original] + collections
         # collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院']==i] for i in selected_options]
         collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院'].apply(lambda x: i in x.split(';'))] for i in selected_options]
+        if 考生or親友or全部=='考生' or '陪考親友':
+            collections = [df[df['身分別']==考生or親友or全部] for df in collections]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
@@ -1169,31 +1178,41 @@ st.markdown("##")  ## 更大的间隔
 
 
 
-# ####### 選擇身分別  (要放在 Q1 之後)
+# ####### 篩選身分別  (要放在 Q1 之後)
 # 考生or親友or全部_list = ['考生','陪考親友','全部']
 # 考生or親友or全部 = st.selectbox('選擇想獲取的資訊之身份別(考生,陪考親友,全部)', 考生or親友or全部_list)
 ## '0', '1' , '2' 都相同
 if 系_院_校 == '0':
     if 考生or親友or全部 == '考生':
-        df_admission = df_admission[df_admission['身分別']=='考生'] 
+        df_admission = df_admission[df_admission['身分別']=='考生']  
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='考生']  
     if 考生or親友or全部 == '陪考親友':
         df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='陪考親友'] 
     if 考生or親友or全部 == '全部':
-        df_admission = df_admission 
+        df_admission = df_admission
+        df_admission_faculty = df_admission_faculty
+    
 if 系_院_校 == '1':
     if 考生or親友or全部 == '考生':
         df_admission = df_admission[df_admission['身分別']=='考生'] 
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='考生']
     if 考生or親友or全部 == '陪考親友':
-        df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+        df_admission = df_admission[df_admission['身分別']=='陪考親友']
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='陪考親友']
     if 考生or親友or全部 == '全部':
         df_admission = df_admission
+        df_admission_faculty = df_admission_faculty
 if 系_院_校 == '2':
     if 考生or親友or全部 == '考生':
         df_admission = df_admission[df_admission['身分別']=='考生'] 
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='考生']
     if 考生or親友or全部 == '陪考親友':
-        df_admission = df_admission[df_admission['身分別']=='陪考親友'] 
+        df_admission = df_admission[df_admission['身分別']=='陪考親友']
+        df_admission_faculty = df_admission_faculty[df_admission_faculty['身分別']=='陪考親友']
     if 考生or親友or全部 == '全部':
-        df_admission = df_admission 
+        df_admission = df_admission
+        df_admission_faculty = df_admission_faculty
 
   
 
