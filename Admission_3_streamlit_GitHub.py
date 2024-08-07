@@ -1239,7 +1239,7 @@ with st.expander("Q3. 高中別:"):
     item_name = "高中別(前 5大)"
     column_title.append(df_admission.columns[column_index][0:])
     # set(df_admission_original['科系'])
-    rank_number = 10
+    rank_number = 15
 
     ##### 產出 result_df
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
