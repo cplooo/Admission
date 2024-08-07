@@ -611,8 +611,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
             # 生成当前分组的y轴位置
             index = np.arange(num_bars) + i * bar_width
             # index = r + i * bar_width
-            # rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-            rects = ax.barh(index, df['人數'], height=bar_width, label=college_name)
+            rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+            # rects = ax.barh(index, df['人數'], height=bar_width, label=college_name)
     
             # # 在每个条形上标示比例
             # for rect, ratio in zip(rects, df['比例']):
@@ -909,10 +909,10 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         index = np.arange(num_bars) + i * bar_width
         # index = r + i * bar_width
         # if 系_院_校 == '0' or '1':
-        # rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
-        rects = ax.barh(index, df['人數'], height=bar_width, label=college_name)
-        st.write(f"<h6>{college_name}</h6>", unsafe_allow_html=True)
-        st.write(df.to_html(index=False), unsafe_allow_html=True)
+        rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
+        # rects = ax.barh(index, df['人數'], height=bar_width, label=college_name)
+        # st.write(f"<h6>{college_name}</h6>", unsafe_allow_html=True)
+        # st.write(df.to_html(index=False), unsafe_allow_html=True)
         
         
     # if 系_院_校 == '2':
@@ -1273,12 +1273,12 @@ with st.expander("Q3. 高中別:"):
     item_name = "高中別(前 5大)"
     column_title.append(df_admission.columns[column_index][0:])
     # set(df_admission_original['科系'])
-    rank_number = 15
+    rank_number = 5
 
     ##### 產出 result_df
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
-    # #### 選取前面 5 筆資料
-    # result_df = result_df.head(rank_number)
+    #### 選取前面 5 筆資料
+    result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
@@ -1306,7 +1306,7 @@ with st.expander("Q3. 高中別:"):
 
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
-    Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
+    Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=True, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
     plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
