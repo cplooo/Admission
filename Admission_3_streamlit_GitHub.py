@@ -280,7 +280,7 @@ college_map =\
 ##### 定義一個函數來根據科系名稱填充學院欄位
 def map_colleges(department):
     colleges = []
-    departments = department.split(' ')  # 因為應用此函數所在的column的每一個row有可能是多個項目, 此行程式以 ',' 將多個項目拆分成列表.
+    departments = department.split(' ')  ##<注意> split(' ')中的分隔符號要隨資料而決定. 因為應用此函數所在的column的每一個row有可能是多個項目, 此行程式以 ' ' 將多個項目拆分成列表.
     for dep in departments:
         for key, value in college_map.items():
             if key in dep.strip():  # 移除空白後檢查每個項目
@@ -764,7 +764,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # if 系_院_校 == '0' or '1' or '2':
     ## 以下選擇單位要從 df_admission_original 選, 若從df_admission選擇, 就是限定某單位了, 再從此單位去選別單位, 是選不到的.
     if 系_院_校 == '0': 
-        collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
+        # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
+        collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
