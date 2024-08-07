@@ -15,7 +15,7 @@ import streamlit as st
 import streamlit.components.v1 as stc 
 #os.chdir(r'C:\Users\user\Dropbox\系務\校務研究IR\大一新生學習適應調查分析\112')
 
-# ####### 資料前處理  (建立 'df_admission.pkl')
+# ####### 資料前處理 (Part 1, 建立 'df_admission_original.pkl')
 # ###### 讀入調查結果 
 # df_admission = pd.read_excel(r'C:\Users\user\Dropbox\系務\校務研究IR\靜宜大學申請入學甄試服務問卷調查\113\GitHub上傳\result_113.xlsx')
 # df_admission.shape  ## (1890, 43)
@@ -93,7 +93,7 @@ import streamlit.components.v1 as stc
 # # '''
 
 
-# ###### 定義系名到學院的映射
+# ###### 定義系名到學院的映射 (不要)
 # #['Science', 'Management', 'Social','Information','Internation','Language']
 # college_map =\
 # {'台灣文學系':'人文暨社會科學院', 
@@ -123,7 +123,7 @@ import streamlit.components.v1 as stc
 # }
 
 
-# ###### 使用映射來創建新的 '學院別' 欄位
+# ###### 使用映射來創建新的 '學院別' 欄位 (不要)
 # df_admission.columns
 # df_admission['學院'] = df_admission['請問您今天參與哪些學系甄試(可複選) ?'].map(college_map)
 # df_admission.shape  ##  (1890, 44)
@@ -139,7 +139,7 @@ import streamlit.components.v1 as stc
 # #df_admission_理學.columns
 
 
-# ###### 分開 "考生" 與 "陪考親友"
+# ###### 分開 "考生" 與 "陪考親友" (不要)
 # df_admission_考生 = df_admission[df_admission['請問您的身份 (考生與陪考親友都歡迎填寫) ?']=='考生'].reset_index(drop=True)
 # df_admission_考生.shape  ##  (1737, 44)
 # df_admission_陪考親友 = df_admission[df_admission['請問您的身份 (考生與陪考親友都歡迎填寫) ?']=='陪考親友'].reset_index(drop=True)
@@ -221,7 +221,7 @@ def adjust_df(df, order):
 df_admission_original = load_data('df_admission_original.pkl')
 # df_admission_original = load_data(r'C:\Users\user\Dropbox\系務\校務研究IR\大一新生學習適應調查分析\112\GitHub上傳\df_freshman_original.pkl')
 
-####### 資料前處理
+####### 資料前處理 (Part 2)
 ###### 使用rename方法更改column名称: '請問您今天參與哪些學系甄試(可複選) ?' -> '科系'
 df_admission_original = df_admission_original.rename(columns={'請問您今天參與哪些學系甄試(可複選) ?': '科系'})
 # df_admission_original.columns
@@ -286,13 +286,19 @@ def map_colleges(department):
             if key in dep.strip():  # 移除空白後檢查每個項目
                 colleges.append(value)
     return ';'.join(set(colleges)) if colleges else '未知學院'
+# #### 測試:
+# dep='資科系 '
+# dep.strip()
+# type(dep.strip())  ## str
+# '資科系' in dep.strip()  ## True
 
 
 ##### 使用 apply 方法來應用該函數到科系欄位
 df_admission_original['學院'] = df_admission_original['科系'].apply(map_colleges)
 # set(df_admission_original['學院'])
+
 # ###### 将 DataFrame 保存为 Excel 文件
-# df_admission_original.to_excel('df_admission_original.xlsx', index=False)
+# df_admission_original.to_excel('df_admission_original_revised.xlsx', index=False)
 
 
 
@@ -432,6 +438,11 @@ st.markdown("""
 </style>
 <p class="bold-small-font">系、院、校 群體選擇 & 填問卷者身份選擇</p>
 """, unsafe_allow_html=True)
+
+
+
+
+
 ####### 選擇: 院系 
 ###### 院 or 系 清單:
 departments_list = ['台灣文學系', 
@@ -766,7 +777,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     if 系_院_校 == '0': 
         collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
-        
+        collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]        
+         
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
         else:
