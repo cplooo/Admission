@@ -2134,7 +2134,7 @@ with st.expander("Q8-特定高中. 特定高中認識與瞭解靜宜大學的管
     ##### 將列表中的元素用 "、" 分隔開
     joined_options = '、'.join(selected_options)
     ##### 在前面和後面加上指定的字符串
-    item_name = f"重點高中({joined_options}) V.S.一般高中/所有高中 認識與瞭解靜宜大學的管道(複選)"
+    item_name = f"重點高中({joined_options})/去除10所重點高中/所有高中 認識與瞭解靜宜大學的管道(複選)"
     
     ##### 產出 result_df: 加條件: 挑選出 selected_options 中的特定高中
     if 系_院_校 == '0':
