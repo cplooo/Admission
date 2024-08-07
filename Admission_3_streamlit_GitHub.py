@@ -976,8 +976,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # if 系_院_校 == '0' or '1':
     st.pyplot(plt)
     
-    ### 關閉當前圖形以釋放內存
-    plt.close()  ## 關閉當前圖形以釋放內存
+    # ### 關閉當前圖形以釋放內存
+    # plt.close()  ## 關閉當前圖形以釋放內存
 
 
         
@@ -1164,7 +1164,7 @@ with st.expander("Q1. 身分別(考生與陪考親友的佔比):"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 16, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1239,7 +1239,7 @@ with st.expander("Q2. 高中位置:"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 16,legend_fontsize = 18,xticklabel_fontsize = 16, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1285,7 +1285,7 @@ with st.expander("Q3. 高中別:"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 18, annotation_fontsize = 18, bar_width = 0.2, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1371,7 +1371,7 @@ with st.expander("Q4. 各學系填答人數與比例(複選): 在所選擇群體
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 13, annotation_fontsize = 16, bar_width = 0.1, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔  
 
 
@@ -1416,7 +1416,7 @@ with st.expander("Q5. 今日搭乘的交通工具(可複選):"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔  
 
 
@@ -1470,7 +1470,7 @@ with st.expander("Q6. 參與靜宜大學申請入學主要原因(複選):"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1547,6 +1547,7 @@ with st.expander("Q6-特定高中. 特定高中參與靜宜大學申請入學主
     # Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     # Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=True, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)    
     Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.1, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict, selected_options=selected_options )   
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1591,7 +1592,7 @@ with st.expander("Q8. 認識與瞭解靜宜大學的管道(複選):"):
     # Draw(系_院_校, column_index, ';', '沒有工讀', 1, result_df, selected_options, dataframes, combined_df)
     # Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, result_df, selected_options)
     Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=1, item_name=item_name, rank=False, rank_number=rank_number, df_admission=df_admission, df_admission_faculty=df_admission_faculty)    
-    
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
@@ -1729,6 +1730,7 @@ with st.expander("Q8-特定高中. 特定高中認識與瞭解靜宜大學的管
     # Draw(系_院_校, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, result_df=result_df, selected_options=selected_options, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=20,xlabel_fontsize = 18,ylabel_fontsize = 18,legend_fontsize = 18,xticklabel_fontsize = 18, yticklabel_fontsize = 16, annotation_fontsize = 18, bar_width = 0.08, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=5, df_admission=df_admission_restrict, df_admission_faculty=df_admission_faculty_restrict)    
     # Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.08, fontsize_adjust=0, item_name='', rank=True, rank_number=5, df_admission=df_admission, df_admission_restrict=df_admission_restrict)    
     Draw_2(column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1, dataframes=dataframes, combined_df=combined_df, width1=10,heigh1=6,width2=11,heigh2=8,width3=10,heigh3=6,title_fontsize=15,xlabel_fontsize = 14,ylabel_fontsize = 14,legend_fontsize = 14,xticklabel_fontsize = 14, yticklabel_fontsize = 14, annotation_fontsize = 14, bar_width = 0.13, fontsize_adjust=0, item_name=item_name, rank=False, rank_number=10, df_admission=df_admission, df_admission_restrict=df_admission_restrict, selected_options=selected_options)   
+    plt.close()  # 關閉當前圖形以釋放內存
 st.markdown("##")  ## 更大的间隔 
 
 
