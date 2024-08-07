@@ -852,6 +852,11 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         combined_df = pd.concat(dataframes, keys=selected_options)
         # combined_df = pd.concat(dataframes, keys=['全校'])
 
+
+    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+
+
             
     # 获取level 0索引的唯一值并保持原始顺序
     unique_level0 = combined_df.index.get_level_values(0).unique()
@@ -891,6 +896,10 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # if 系_院_校 == '0' or '1':
         # rects = ax.barh(index, df['比例'], height=bar_width, label=college_name)
         rects = ax.barh(index, df['人數'], height=bar_width, label=college_name)
+        st.write(f"<h6>{college_name}</h6>", unsafe_allow_html=True)
+        st.write(df.to_html(index=False), unsafe_allow_html=True)
+        
+        
     # if 系_院_校 == '2':
     # #     index = np.arange(len(desired_order))
     # #     rects = ax.barh(index, dataframes[0]['比例'], height=bar_width, label='全校')
