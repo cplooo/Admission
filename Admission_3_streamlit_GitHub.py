@@ -789,7 +789,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     if 系_院_校 == '0': 
         # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
-        collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]  
+        # collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options] 
+        collections = [df_admission_original[df_admission_original['科系'].str.contains(i, regex=True)] for i in selected_options]
         # # 应用函数到每个 row
         # collections = [df_admission_school[df_admission_original['科系'].apply(lambda x: contains_choice(x, i, '\n'))] for i in selected_options]
 
@@ -1239,7 +1240,7 @@ with st.expander("Q3. 高中別:"):
     rank_number = 10
 
     ##### 產出 result_df
-    result_df = Frequency_Distribution(df_admission, column_index, split_symbol='\n', dropped_string='沒有工讀', sum_choice=1)    
+    result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
     #### 選取前面 5 筆資料
     result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
