@@ -788,7 +788,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # if 系_院_校 == '0' or '1' or '2':
     ## 以下選擇單位要從 df_admission_original 選, 若從df_admission選擇, 就是限定某單位了, 再從此單位去選別單位, 是選不到的.
     if 系_院_校 == '0':
-        collections=[]
+        # collections=[]
         # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options] 
@@ -815,7 +815,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '1':
-        collections=[]
+        # collections=[]
         # collections = [df_admission_school[df_admission_school['學院']==i] for i in selected_options]
         collections = [df_admission_school[df_admission_school['學院'].apply(lambda x: i in x.split(';'))] for i in selected_options]
 
@@ -834,7 +834,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         dataframes = [adjust_df(df, desired_order) for df in dataframes]        
         combined_df = pd.concat(dataframes, keys=selected_options)
     elif 系_院_校 == '2':
-        collections=[]
+        # collections=[]
         # collections = [df_admission_original[df_admission_original['學院'].str.contains(i, regex=True)] for i in selected_options if i!='全校' else df_admission_original]
         # collections = [df_admission_original] + collections
         # collections = [df_admission_school if i == '全校' else df_admission_school[df_admission_school['學院']==i] for i in selected_options]
