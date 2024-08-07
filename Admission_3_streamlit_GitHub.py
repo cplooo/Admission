@@ -775,7 +775,7 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     # if 系_院_校 == '0' or '1' or '2':
     ## 以下選擇單位要從 df_admission_original 選, 若從df_admission選擇, 就是限定某單位了, 再從此單位去選別單位, 是選不到的.
     if 系_院_校 == '0': 
-        collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
+        # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
         collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]        
          
