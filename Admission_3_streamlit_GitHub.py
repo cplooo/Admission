@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # -*- coding: utf-8 -*-
-"""
-113
-"""
+""""""""""""""""""""""""""""""""""""
+113靜宜大學申請入學甄試服務問卷調查
+""""""""""""""""""""""""""""""""""""
 
 import pandas as pd
 import os
@@ -280,7 +280,7 @@ college_map =\
 ##### 定義一個函數來根據科系名稱填充學院欄位
 def map_colleges(department):
     colleges = []
-    departments = department.split(',')  # 將多個項目拆分成列表
+    departments = department.split(' ')  # 因為應用此函數所在的column的每一個row有可能是多個項目, 此行程式以 ',' 將多個項目拆分成列表.
     for dep in departments:
         for key, value in college_map.items():
             if key in dep.strip():  # 移除空白後檢查每個項目
@@ -932,6 +932,9 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     ### 在Streamlit中显示
     # if 系_院_校 == '0' or '1':
     st.pyplot(plt)
+    
+    ### 關閉當前圖形以釋放內存
+    plt.close()  ## 關閉當前圖形以釋放內存
 
 
         
@@ -1055,6 +1058,9 @@ def Draw_2(column_index, split_symbol=';', dropped_string='沒有工讀', sum_ch
     # plt.show()
     ### 在Streamlit中显示
     st.pyplot(plt)
+    
+    ### 關閉當前圖形以釋放內存
+    plt.close()  ## 關閉當前圖形以釋放內存
 
 
 
