@@ -239,7 +239,7 @@ df_admission_original = df_admission_original.rename(columns={'請問您的身�
 # mask = df_admission_original['科系'].str.contains('資料科學暨大數據分析與應用學系(資科系)')
 # df_admission_original.loc[mask, '科系'] = df_admission_original.loc[mask, '科系'].str.replace('資料科學暨大數據分析與應用學系(資科系)', '資料科學暨大數據分析與應用學系')
 df_admission_original['科系'] = df_admission_original['科系'].str.replace(r'資料科學暨大數據分析與應用學系\(資科系\)', '資料科學暨大數據分析與應用學系', regex=True)
-
+# df_admission_original['科系'][7]  ## '資料科學暨大數據分析與應用學系\n資訊管理學系'
 
 ###### 創造 '學院' 欄位:
 college_map =\
@@ -280,7 +280,7 @@ college_map =\
 ##### 定義一個函數來根據科系名稱填充學院欄位
 def map_colleges(department):
     colleges = []
-    departments = department.split(' ')  ##<注意> split(' ')中的分隔符號要隨資料而決定. 因為應用此函數所在的column的每一個row有可能是多個項目, 此行程式以 ' ' 將多個項目拆分成列表.
+    departments = department.split('\n')  ##<注意> split('\n')中的分隔符號要隨資料而決定. 因為應用此函數所在的column的每一個row有可能是多個項目, 此行程式以 '\n' 將多個項目拆分成列表.
     for dep in departments:
         for key, value in college_map.items():
             if key in dep.strip():  # 移除空白後檢查每個項目
