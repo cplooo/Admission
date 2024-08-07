@@ -1243,8 +1243,8 @@ with st.expander("Q3. 高中別:"):
 
     ##### 產出 result_df
     result_df = Frequency_Distribution(df_admission, column_index, split_symbol=';', dropped_string='沒有工讀', sum_choice=1)    
-    #### 選取前面 5 筆資料
-    result_df = result_df.head(rank_number)
+    # #### 選取前面 5 筆資料
+    # result_df = result_df.head(rank_number)
     ##### 存到 list 'df_streamlit'
     df_streamlit.append(result_df)  
 
