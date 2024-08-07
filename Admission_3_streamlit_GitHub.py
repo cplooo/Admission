@@ -309,12 +309,15 @@ df_admission_original['學院'] = df_admission_original['科系'].apply(map_coll
 
 # ###### 将 DataFrame 保存为 Excel 文件
 # df_admission_original.to_excel('df_admission_original_revised3.xlsx', index=False)
-df_admission = df_admission_original[df_admission_original['科系'].str.contains('財務工程學系', regex=True)]
-df_admission['科系']
-# df_admission.iloc[:,2]
-df_admission[df_admission['請問您的高中學校全名 ?']=='東莞臺商子弟學校']['科系']
 
-东莞台商子弟学校
+
+# ###### 測試
+# df_admission = df_admission_original[df_admission_original['科系'].str.contains('財務工程學系', regex=True)]
+# #df_admission['科系']
+# # df_admission.iloc[:,2]
+# df_admission[df_admission['請問您的高中學校全名 ?']=='東莞臺商子弟學校']
+
+
 
 
 
