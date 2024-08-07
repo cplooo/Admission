@@ -214,6 +214,10 @@ def adjust_df(df, order):
     df = df.set_index('項目').reindex(order).reset_index()
     return df
 
+###### 定义包含指定 choice 的检查函数
+def contains_choice(department, choice, split_symbol):
+    return any(choice in dep for dep in department.split(split_symbol))
+
 
 
 
@@ -298,7 +302,7 @@ df_admission_original['學院'] = df_admission_original['科系'].apply(map_coll
 # set(df_admission_original['學院'])
 
 # ###### 将 DataFrame 保存为 Excel 文件
-# df_admission_original.to_excel('df_admission_original_revised.xlsx', index=False)
+# df_admission_original.to_excel('df_admission_original_revised2.xlsx', index=False)
 
 
 
@@ -490,7 +494,9 @@ if 系_院_校 == '0':
     
     
     # df_admission = df_admission_original[df_admission_original['科系']==choice]
-    df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
+    # df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
+    df_admission = df_admission_original[df_admission_original['科系'].apply(lambda x: contains_choice(x, choice, '\n'))]
+
     # df_admission_whole = df_admission
           
     # choice_faculty = df_admission['學院'].values[0]  ## 選擇學系所屬學院
@@ -777,7 +783,10 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
     if 系_院_校 == '0': 
         # collections = [df_admission_school[df_admission_school['科系']==i] for i in selected_options]
         # collections = [df_admission_school[df_admission_school['科系'].apply(lambda x: i in x.split(' '))] for i in selected_options]
-        collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]        
+        collections = [df_admission_school[df_admission_school['科系'].str.contains(i, regex=True)] for i in selected_options]  
+        # 应用函数到每个 row
+        collections = [df_admission_school[df_admission_original['科系'].apply(lambda x: contains_choice(x, i, '\n'))] for i in selected_options]
+
          
         if rank == True:
             dataframes = [Frequency_Distribution(df, column_index, split_symbol, dropped_string, sum_choice).head(rank_number) for df in collections]  ## 'dataframes' list 中的各dataframe已經是按照次數高至低的項目順序排列
