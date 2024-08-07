@@ -494,8 +494,8 @@ if 系_院_校 == '0':
     
     
     # df_admission = df_admission_original[df_admission_original['科系']==choice]
-    # df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
-    df_admission = df_admission_original[df_admission_original['科系'].apply(lambda x: contains_choice(x, choice, '\n'))]
+    df_admission = df_admission_original[df_admission_original['科系'].str.contains(choice, regex=True)]
+    # df_admission = df_admission_original[df_admission_original['科系'].apply(lambda x: contains_choice(x, choice, '\n'))]
 
     # df_admission_whole = df_admission
           
