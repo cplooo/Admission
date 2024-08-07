@@ -853,8 +853,8 @@ def Draw(系_院_校, column_index, split_symbol=';', dropped_string='沒有工�
         # combined_df = pd.concat(dataframes, keys=['全校'])
 
 
-    st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
-    st.write(result_df.to_html(index=False), unsafe_allow_html=True)
+    # st.write(f"<h6>{choice}</h6>", unsafe_allow_html=True)
+    # st.write(result_df.to_html(index=False), unsafe_allow_html=True)
 
 
             
